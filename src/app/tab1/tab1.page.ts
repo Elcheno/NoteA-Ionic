@@ -5,6 +5,7 @@ import { Note } from '../model/note';
 import { CommonModule } from '@angular/common';
 import { ModalController } from '@ionic/angular';
 import { UpdateNoteComponent } from '../components/update-note/update-note.component';
+import { UIService } from '../services/ui.service';
 
 @Component({
   selector: 'app-tab1',
@@ -17,18 +18,9 @@ export class Tab1Page {
 
   public noteS = inject(NoteService);
   private modalS = inject(ModalController);
+  private uiService = inject(UIService);
 
   constructor() {}
-
-  // ionViewDidEnter(){
-    /*this.misnotas=[];
-    this.noteS.readAll().subscribe(d=>{
-      console.log(d)
-      d.docs.forEach((el:any) => {
-        this.misnotas.push({'key':el.id,...el.data()});
-      });
-    })*/
-  // }
 
   async editNote(note: Note): Promise<void> {
     if (note && note.key) {
@@ -47,10 +39,11 @@ export class Tab1Page {
 
   async deleteNote(note: Note): Promise<void> {
     if (note && note.key) {
-      await this.noteS.deleteNote(note).then(()=> console.log('nota eliminada'));
+      const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+      if (resultDismiss && resultDismiss === 'confirm') {
+        await this.noteS.deleteNote(note).then(()=> console.log('nota eliminada'));
+      }
     }
   }
-
-
 
 }
