@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from 'src/app/model/note';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-note',
@@ -17,6 +18,7 @@ export class UpdateNoteComponent implements OnInit {
 
   private modalS = inject(ModalController);
   private formB = inject(FormBuilder);
+  private ascService = inject(ActionSheetController);
 
   public form!: FormGroup;
 
@@ -38,7 +40,7 @@ export class UpdateNoteComponent implements OnInit {
     return this.modalS.dismiss(null, 'cancel');
   }
 
-  confirm() {
+  async confirm() {
     if(!this.form.valid) return;
     const aux: Note = {
       key: this.note.key,
@@ -46,7 +48,34 @@ export class UpdateNoteComponent implements OnInit {
       description: this.form.value.description,
       date: this.note.date,
     };
-    return this.modalS.dismiss(aux, 'confirm');
+
+    const resultDismiss = await this.modalDismiss();
+    if(resultDismiss && resultDismiss === 'confirm') {
+      return this.modalS.dismiss(aux, 'confirm');
+    }
+    return;
   }
+
+  async modalDismiss(): Promise<string | undefined> {
+    const actionSheet = await this.ascService.create({
+      header: 'Are you sure?',
+      buttons: [
+        {
+          text: 'Yes',
+          role: 'confirm',
+        },
+        {
+          text: 'No',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    actionSheet.present();
+    
+    const { role } = await actionSheet.onWillDismiss();
+
+    return role;
+  };
 
 }

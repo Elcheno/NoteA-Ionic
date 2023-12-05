@@ -32,7 +32,7 @@ export class FormNotesComponent  {
     let note:Note = {
       title: this.form.get("title")?.value,
       description: this.form.get("description")?.value,
-      date: Date.now().toLocaleString()
+      date: new Date(Date.now()).toLocaleDateString()
     }
     this.outSubmit.emit(note);
     this.form.reset();
