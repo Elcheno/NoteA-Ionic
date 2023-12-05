@@ -68,6 +68,9 @@
   },
   "description": "An Ionic project",
   "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
     "extends": "standard"
   }
 }
