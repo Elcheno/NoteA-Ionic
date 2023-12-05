@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Edit Note</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+
+    <ion-item>
+      <ion-label>
+        Title
+      </ion-label>
+      <ion-input label="title" type="text" formControlName="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>
+        Description
+      </ion-label>
+      <ion-textarea label="Description" formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-toolbar>
+      <ion-button slot="start">
+        <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
+      </ion-button>
+      <ion-button slot="end">
+        <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+
+  </form>
+</ion-content>

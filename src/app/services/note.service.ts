@@ -33,7 +33,7 @@ export class NoteService {
     return this.myCollection.get();
   }
   
-  readNote(key: string):  Observable<any> {
+  readNote(key: string): Observable<any> {
     return this.myCollection.doc(key).get();
   }
 

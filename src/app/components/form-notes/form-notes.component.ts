@@ -1,6 +1,6 @@
 import { Component,EventEmitter,Output,inject } from '@angular/core';
 import { IonicModule, LoadingController } from '@ionic/angular'
-import { FormBuilder,FormGroup,FormsModule, ReactiveFormsModule,Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from '../../model/note';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
@@ -15,9 +15,10 @@ export class FormNotesComponent  {
 
   @Output() outSubmit = new EventEmitter<Note>();
 
-  public form!:FormGroup;
   private formB = inject(FormBuilder);
   public loadingS = inject(LoadingController);
+
+  public form!: FormGroup;
 
   constructor() {
     this.form = this.formB.group({
