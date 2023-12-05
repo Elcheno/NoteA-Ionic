@@ -32,7 +32,20 @@ export class Tab1Page {
 
       const { data, role } = await modal.onWillDismiss();
       if (role === 'confirm') {
-        await this.noteS.updateNote(data).then(()=> console.log('nota ha sido actulizada'));
+        await this.uiService.showLoading();
+
+        try {
+          await this.noteS.updateNote(data).then(()=> console.log('nota ha sido actulizada'));
+          await this.uiService.showToast("Nota actualizada correctamente", "success");
+
+        } catch (err) {
+          await this.uiService.showToast("Error al actualizar la nota", "danger");
+
+        } finally {
+          await this.uiService.hideLoading();
+
+        }
+       
       }
     }
   }
@@ -41,7 +54,19 @@ export class Tab1Page {
     if (note && note.key) {
       const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
       if (resultDismiss && resultDismiss === 'confirm') {
-        await this.noteS.deleteNote(note).then(()=> console.log('nota eliminada'));
+        await this.uiService.showLoading();
+
+        try {
+          await this.noteS.deleteNote(note).then(()=> console.log('nota eliminada'));
+          await this.uiService.showToast("Nota eliminada correctamente", "success");
+
+        } catch (err) {
+          await this.uiService.showToast("Error al eliminar la nota", "danger");
+
+        } finally {
+          await this.uiService.hideLoading();
+
+        }
       }
     }
   }

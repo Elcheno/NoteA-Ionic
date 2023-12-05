@@ -2,7 +2,7 @@ import { Component,EventEmitter,Output,inject } from '@angular/core';
 import { IonicModule, LoadingController } from '@ionic/angular'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from '../../model/note';
-import { Camera, CameraResultType } from '@capacitor/camera';
+import { Camera, CameraResultType, Photo } from '@capacitor/camera';
 
 @Component({
   selector: 'app-form-notes',
@@ -38,12 +38,14 @@ export class FormNotesComponent  {
     this.form.reset();
   }
 
-  public async takePic() {
+  public async takePic(): Promise<Photo | undefined> {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
       resultType: CameraResultType.Uri
     });
+    if (image) return image;
+    return undefined;
   }
 
 }
