@@ -32,9 +32,11 @@ export class NoteService {
   readAll(): Observable<any> {
     return this.myCollection.get();
   }
+  
   readNote(key: string):  Observable<any> {
     return this.myCollection.doc(key).get();
   }
+
   updateNote(note: Note): Promise<void> {
     return new Promise(async (resolve, reject) => {
       if (!note.key) reject("Key not defined");
@@ -46,6 +48,7 @@ export class NoteService {
       }
     })
   }
+
   deleteNote(note:Note):Promise<void>{
     return new Promise(async (resolve,reject)=>{
       if (!note.key) reject("Key not defined");

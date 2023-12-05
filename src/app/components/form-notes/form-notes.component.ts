@@ -1,34 +1,34 @@
 import { Component,inject } from '@angular/core';
 import { IonicModule, LoadingController } from '@ionic/angular'
 import { FormBuilder,FormGroup,FormsModule, ReactiveFormsModule,Validators } from '@angular/forms';
-import { Note } from '../model/note';
-import { NoteService } from '../services/note.service';
-import { UIService } from '../services/ui.service';
+import { Note } from '../../model/note';
+import { NoteService } from '../../services/note.service';
+import { UIService } from '../../services/ui.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss'],
+  selector: 'app-form-notes',
+  templateUrl: './form-notes.component.html',
+  styleUrls: ['./form-notes.component.scss'],
   standalone: true,
   imports: [IonicModule,
     FormsModule,ReactiveFormsModule]
 })
-export class Tab2Page {
-  //public misnotas:Note[]=[];
+export class FormNotesComponent  {
+
   public form!:FormGroup;
   private formB = inject(FormBuilder);
   private noteS = inject(NoteService);
   private UIS = inject(UIService);
   public loadingS = inject(LoadingController);
   private myLoading!:HTMLIonLoadingElement;
+
   constructor() {
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
       description:['']
     });
   }
-
 
   public async saveNote():Promise<void>{
     if(!this.form.valid) return;
@@ -49,21 +49,12 @@ export class Tab2Page {
     }
   }
 
-  public async takePic(){
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri
-      });
-    
-      // image.webPath will contain a path that can be set as an image src.
-      // You can access the original file using image.path, which can be
-      // passed to the Filesystem API to read the raw data of the image,
-      // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-      //var imageUrl = image.webPath;
-    
-      // Can be set to the src of an image now
-      //imageElement.src = imageUrl;
+  public async takePic() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
   }
 
 }
