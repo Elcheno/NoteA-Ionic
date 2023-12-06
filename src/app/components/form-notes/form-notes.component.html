@@ -30,8 +30,10 @@
       <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
     </ion-button>
   </ion-toolbar>
-  <ion-item>
-    <img [src]="'data:image/jpg;base64,'+ this.img"/> 
-  </ion-item>
+  @if (this.img) {
+    <ion-item>
+      <img [src]="'data:image/jpg;base64,'+ this.img"/> 
+    </ion-item>
+  }
   <ion-button type="submit" expand="full" [disabled]="!form.valid">Submit</ion-button>
 </form>
