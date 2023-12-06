@@ -2,7 +2,8 @@ import { Component,EventEmitter,Output,inject } from '@angular/core';
 import { IonicModule, LoadingController } from '@ionic/angular'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from '../../model/note';
-import { Camera, CameraResultType, Photo } from '@capacitor/camera';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-form-notes',
@@ -20,6 +21,8 @@ export class FormNotesComponent  {
 
   public form!: FormGroup;
   private img!: string;
+  private latitude!: number;
+  private longitude!: number;
 
   constructor() {
     this.form = this.formB.group({
@@ -31,11 +34,16 @@ export class FormNotesComponent  {
 
   public async submit(): Promise<void> {
     if (!this.form.valid) return;
+    console.log(this.latitude + ' | ' + this.longitude);
     let note: Note = {
       title: this.form.get("title")?.value,
       description: this.form.get("description")?.value,
       date: new Date(Date.now()).toLocaleDateString(),
-      img: this.img ? this.img : ''
+      img: this.img ? this.img : '',
+      position: {
+        latitude: this.latitude ? this.latitude : undefined,
+        longitude: this.longitude ? this.longitude : undefined
+      }
     }
     this.outSubmit.emit(note);
     this.form.reset();
@@ -50,6 +58,14 @@ export class FormNotesComponent  {
     })
     if (image.base64String) this.img = image.base64String;
 
+  }
+
+  public async takeLocation() {
+    const coordinates = await Geolocation.getCurrentPosition();
+    if (coordinates && coordinates.coords.latitude && coordinates.coords.longitude) {
+      this.latitude = coordinates.coords.latitude;
+      this.longitude = coordinates.coords.longitude;
+    }
   }
 
 }

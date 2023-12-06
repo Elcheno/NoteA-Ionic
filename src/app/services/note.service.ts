@@ -26,6 +26,8 @@ export class NoteService {
     
   }
   addNote(note: Note): Promise<DocumentReference> {
+    console.log('guardando nota con localizacion')
+    console.log(note)
     return this.myCollection.add(note);
   }
   //todo: paginated read
