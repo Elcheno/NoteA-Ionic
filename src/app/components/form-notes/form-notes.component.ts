@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Note } from '../../model/note';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Geolocation } from '@capacitor/geolocation';
+import { Position } from 'src/app/model/position';
 
 @Component({
   selector: 'app-form-notes',
@@ -20,33 +21,31 @@ export class FormNotesComponent  {
   public loadingS = inject(LoadingController);
 
   public form!: FormGroup;
-  private img!: string;
-  private latitude!: number;
-  private longitude!: number;
+  public img!: string | undefined;
+  public location: Position = {
+    latitude: undefined,
+    longitude: undefined
+  }
 
   constructor() {
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
-      description:['']
+      description:[''],
     });
 
   }
 
   public async submit(): Promise<void> {
     if (!this.form.valid) return;
-    console.log(this.latitude + ' | ' + this.longitude);
     let note: Note = {
       title: this.form.get("title")?.value,
       description: this.form.get("description")?.value,
       date: new Date(Date.now()).toLocaleDateString(),
-      img: this.img ? this.img : '',
-      position: {
-        latitude: this.latitude ? this.latitude : undefined,
-        longitude: this.longitude ? this.longitude : undefined
-      }
+      img: this.img,
+      position: this.location
     }
     this.outSubmit.emit(note);
-    this.form.reset();
+    this.resetForm();
 
   }
 
@@ -57,15 +56,19 @@ export class FormNotesComponent  {
       resultType: CameraResultType.Base64
     })
     if (image.base64String) this.img = image.base64String;
-
   }
 
   public async takeLocation() {
     const coordinates = await Geolocation.getCurrentPosition();
     if (coordinates && coordinates.coords.latitude && coordinates.coords.longitude) {
-      this.latitude = coordinates.coords.latitude;
-      this.longitude = coordinates.coords.longitude;
+      this.location = { latitude: coordinates.coords.latitude, longitude: coordinates.coords.longitude }
     }
+  }
+
+  private resetForm() {
+    this.form.reset();
+    this.img = undefined;
+    this.location = { latitude: undefined, longitude: undefined }
   }
 
 }

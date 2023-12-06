@@ -5,6 +5,6 @@ export interface Note {
     title: string,
     description?: string,
     date: string,
-    img?: string,
+    img?: string | undefined,
     position?: Position
 }
