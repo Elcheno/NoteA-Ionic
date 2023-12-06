@@ -19,33 +19,37 @@ export class FormNotesComponent  {
   public loadingS = inject(LoadingController);
 
   public form!: FormGroup;
+  private img!: string;
 
   constructor() {
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
       description:['']
     });
+
   }
 
   public async submit(): Promise<void> {
     if (!this.form.valid) return;
-    let note:Note = {
+    let note: Note = {
       title: this.form.get("title")?.value,
       description: this.form.get("description")?.value,
-      date: new Date(Date.now()).toLocaleDateString()
+      date: new Date(Date.now()).toLocaleDateString(),
+      img: this.img ? this.img : ''
     }
     this.outSubmit.emit(note);
     this.form.reset();
+
   }
 
-  public async takePic(): Promise<Photo | undefined> {
+  public async takePic() {
     const image = await Camera.getPhoto({
       quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-    if (image) return image;
-    return undefined;
+      allowEditing: false,
+      resultType: CameraResultType.Base64
+    })
+    if (image.base64String) this.img = image.base64String;
+
   }
 
 }
