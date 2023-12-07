@@ -32,17 +32,27 @@
       <ion-button 
         slot="start" 
         (click)="removeLocation()" 
-        [color]="!(this.note.position?.latitude && this.note.position?.longitude) ? 'success' : 'primary'" 
-        [disabled]="(this.note.position?.latitude && this.note.position?.longitude)">
+        [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'" 
+        [disabled]="!(this.location.latitude && this.location.longitude)"
+        [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
         <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
+        @if ((this.location.latitude && this.location.longitude)) {
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+
+        }
       </ion-button>
 
       <ion-button 
         slot="end" 
         (click)="removeImg()" 
-        [color]="this.note.img ? 'success' : 'primary'" 
-        [disabled]="!this.note.img">
+        [color]="this.img ? 'success' : 'primary'" 
+        [disabled]="!this.img"
+        [@btnAnimate]="this.img ? 'success' : 'primary'">
         <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
+        @if (this.img) {
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+
+        }
       </ion-button>
 
     </ion-toolbar>
