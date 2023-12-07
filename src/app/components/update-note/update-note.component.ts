@@ -31,7 +31,7 @@ export class UpdateNoteComponent implements OnInit {
 
   ngOnInit() {
     if (this.note && this.note.title) {
-      const { key, date,...aux } = this.note;
+      const { key, date, img, position, ...aux } = this.note;
       this.form.setValue(aux);
     }
   }
@@ -47,6 +47,8 @@ export class UpdateNoteComponent implements OnInit {
       title: this.form.value.title,
       description: this.form.value.description,
       date: this.note.date,
+      img: this.note.img,
+      position: this.note.position
     };
 
     const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
@@ -54,6 +56,23 @@ export class UpdateNoteComponent implements OnInit {
       return this.modalS.dismiss(aux, 'confirm');
     }
     return;
+  }
+
+  async removeLocation() {
+    const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+    if (resultDismiss && resultDismiss === 'confirm') {
+      this.note.position = {
+        latitude: 1000,
+        longitude: 1000
+      }
+    }
+  }
+
+  async removeImg() {
+    const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+    if (resultDismiss && resultDismiss === 'confirm') {
+      this.note.img = '';
+    }
   }
 
 }

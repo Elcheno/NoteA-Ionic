@@ -11,8 +11,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   imports: [ LeafletModule ]
 })
 export class LeafletMapComponent implements OnInit, OnDestroy {
-  @Input() latitude: number = 100;
-  @Input() longitude: number = 100;
+  @Input() latitude: number | undefined = 100;
+  @Input() longitude: number | undefined = 100;
   
   options: MapOptions = {
     layers: [
@@ -22,7 +22,7 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     })],
     zoom: 15,
-    center: latLng(this.latitude, this.longitude)
+    center: latLng(100, 100)
   };
 
   public map!: Map;

@@ -6,19 +6,22 @@ import { CommonModule } from '@angular/common';
 import { ModalController } from '@ionic/angular';
 import { UpdateNoteComponent } from '../components/update-note/update-note.component';
 import { UIService } from '../services/ui.service';
+import { OrderBy } from '../model/orderBy';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss'],
   standalone: true,
-  imports: [IonicModule,CommonModule],
+  imports: [ IonicModule, CommonModule ],
 })
 export class Tab1Page {
 
   public noteS = inject(NoteService);
   private modalS = inject(ModalController);
   private uiService = inject(UIService);
+
+  public orderBy: OrderBy = 'asc';
 
   constructor() {}
 

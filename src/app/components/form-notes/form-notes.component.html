@@ -1,16 +1,19 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
+
   <ion-item>
     <ion-label>
       Title
     </ion-label>
     <ion-input label="title" type="text" formControlName="title"></ion-input>
   </ion-item>
+
   <ion-item>
     <ion-label>
       Description
     </ion-label>
     <ion-textarea label="Description" formControlName="description"></ion-textarea>
   </ion-item>
+
   <ion-item>
     <ion-label>
       Date
@@ -18,12 +21,13 @@
     <ion-datetime-button datetime="datetime"></ion-datetime-button>
     <ion-modal [keepContentsMounted]="true">
       <ng-template>
-        <ion-datetime id="datetime"></ion-datetime>
+        <ion-datetime id="datetime" formControlName="datetimePicker"></ion-datetime>
       </ng-template>
     </ion-modal>
   </ion-item>
+
   <ion-toolbar>
-    <ion-button slot="start" shape="round" [color]="this.location.latitude && this.location.longitude ? 'success' : 'primary'" (click)="takeLocation()">
+    <ion-button slot="start" shape="round" [color]="!(this.location.latitude === 1000 && this.location.longitude === 1000) ? 'success' : 'primary'" (click)="takeLocation()">
       <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
     </ion-button>
     <ion-button slot="end" shape="round" [color]="this.img ? 'success' : 'primary'" (click)="takePic()">
@@ -31,7 +35,7 @@
     </ion-button>
   </ion-toolbar>
 
-  @if (this.location.latitude && this.location.longitude) {
+  @if (!(this.location.latitude === 1000 && this.location.longitude === 1000)) {
     <app-leaflet-map 
       [latitude]="this.location.latitude" 
       [longitude]="this.location.longitude"
@@ -45,4 +49,5 @@
   }
 
   <ion-button type="submit" expand="full" [disabled]="!form.valid">Submit</ion-button>
+
 </form>

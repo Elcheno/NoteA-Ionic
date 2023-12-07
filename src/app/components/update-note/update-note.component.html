@@ -28,12 +28,23 @@
     </ion-item>
 
     <ion-toolbar>
-      <ion-button slot="start">
+
+      <ion-button 
+        slot="start" 
+        (click)="removeLocation()" 
+        [color]="!(this.note.position?.latitude === 1000 && this.note.position?.longitude === 1000) ? 'success' : 'primary'" 
+        [disabled]="(this.note.position?.latitude === 1000 && this.note.position?.longitude === 1000)">
         <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
       </ion-button>
-      <ion-button slot="end">
+
+      <ion-button 
+        slot="end" 
+        (click)="removeImg()" 
+        [color]="this.note.img ? 'success' : 'primary'" 
+        [disabled]="!this.note.img">
         <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
       </ion-button>
+
     </ion-toolbar>
 
   </form>

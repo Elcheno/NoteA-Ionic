@@ -24,16 +24,17 @@ export class FormNotesComponent {
   private uiService = inject(UIService);
 
   public form!: FormGroup;
-  public img!: string | undefined;
+  public img: string = '';
   public location: Position = {
-    latitude: undefined,
-    longitude: undefined
+    latitude: 1000,
+    longitude: 1000
   }
 
   constructor() {
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
       description:[''],
+      datetimePicker: [new Date(Date.now()).toISOString(), [Validators.required]]
     });
 
   }
@@ -43,20 +44,20 @@ export class FormNotesComponent {
     let note: Note = {
       title: this.form.get("title")?.value,
       description: this.form.get("description")?.value,
-      date: new Date(Date.now()).toLocaleDateString(),
+      date: this.form.get("datetimePicker")?.value,
       img: this.img,
       position: this.location
     }
     this.outSubmit.emit(note);
     this.resetForm();
-
+    
   }
 
   public async takePic() {
     if (this.img) {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
-        this.img = undefined;
+        this.img = '';
       }
     } else {
       const image = await Camera.getPhoto({
@@ -70,12 +71,12 @@ export class FormNotesComponent {
   }
 
   public async takeLocation() {
-    if (this.location.latitude && this.location.longitude) {
+    if (!(this.location.latitude === 1000 && this.location.longitude === 1000)) {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
         this.location = {
-          latitude: undefined,
-          longitude: undefined
+          latitude: 1000,
+          longitude: 1000
         };
       }
     } else {
@@ -89,8 +90,8 @@ export class FormNotesComponent {
 
   private resetForm() {
     this.form.reset();
-    this.img = undefined;
-    this.location = { latitude: undefined, longitude: undefined };
+    this.img = '';
+    this.location = { latitude: 1000, longitude: 1000 };
   }
 
 }

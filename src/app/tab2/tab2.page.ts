@@ -20,9 +20,6 @@ export class Tab2Page {
   private UIS = inject(UIService);
   public loadingS = inject(LoadingController);
 
-  // private map!: Map;
-  // private zoom!: number;
-
   constructor() {}
 
   public async saveNote(note: Note): Promise<void> {
@@ -34,6 +31,8 @@ export class Tab2Page {
 
       } catch (error) {
         await this.UIS.showToast("Error al insertar la nota", "danger");
+        console.error(error);
+        console.error(note);
 
       } finally {
         await this.UIS.hideLoading();
@@ -41,14 +40,4 @@ export class Tab2Page {
       }
     }
   }
-
-
-  
-  // receiveMap(map: Map) {
-  //   this.map = map;
-  // }
-
-  // receiveZoom(zoom: number) {
-  //   this.zoom = zoom;
-  // }
 }

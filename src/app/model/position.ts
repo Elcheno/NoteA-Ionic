@@ -1,4 +1,4 @@
 export interface Position {
-    latitude?: number | undefined,
-    longitude?: number | undefined
+    latitude?: number,
+    longitude?: number
 }
