@@ -4,19 +4,24 @@ import { Note } from '../model/note';
 import { NoteService } from '../services/note.service';
 import { UIService } from '../services/ui.service';
 import { FormNotesComponent } from '../components/form-notes/form-notes.component';
+// import { Map } from 'leaflet';
+// import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormNotesComponent]
+  imports: [IonicModule, FormNotesComponent ]
 })
 export class Tab2Page {
 
   private noteS = inject(NoteService);
   private UIS = inject(UIService);
   public loadingS = inject(LoadingController);
+
+  // private map!: Map;
+  // private zoom!: number;
 
   constructor() {}
 
@@ -37,4 +42,13 @@ export class Tab2Page {
     }
   }
 
+
+  
+  // receiveMap(map: Map) {
+  //   this.map = map;
+  // }
+
+  // receiveZoom(zoom: number) {
+  //   this.zoom = zoom;
+  // }
 }

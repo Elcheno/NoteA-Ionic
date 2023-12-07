@@ -30,10 +30,19 @@
       <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
     </ion-button>
   </ion-toolbar>
+
+  @if (this.location.latitude && this.location.longitude) {
+    <app-leaflet-map 
+      [latitude]="this.location.latitude" 
+      [longitude]="this.location.longitude"
+    ></app-leaflet-map>
+  }
+
   @if (this.img) {
     <ion-item>
       <img [src]="'data:image/jpg;base64,'+ this.img"/> 
     </ion-item>
   }
+
   <ion-button type="submit" expand="full" [disabled]="!form.valid">Submit</ion-button>
 </form>
