@@ -36,7 +36,7 @@ export class LeafletMapComponent implements OnDestroy {
         lat: JSON.parse(this.latitude),
         lng: JSON.parse(this.longitude)
       };
-      
+
       marker([ coords.lat, coords.lng ], {
         icon: icon({
           ...Icon.Default.prototype.options,
@@ -54,8 +54,6 @@ export class LeafletMapComponent implements OnDestroy {
 
     }
   }
-
-  // ngOnInit() {}
 
   ngOnDestroy() {
     if(this.map) this.map.remove();

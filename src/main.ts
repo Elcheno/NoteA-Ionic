@@ -15,6 +15,7 @@ import { provideFirebaseApp } from '@angular/fire/app';
 import { initializeApp } from 'firebase/app';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { IonicModule } from '@ionic/angular';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'
 
 // Call the element loader before the bootstrapModule/bootstrapApplication call
 defineCustomElements(window);
@@ -25,6 +26,7 @@ if (environment.production) {
 bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    provideAnimationsAsync(),
     provideIonicAngular(),
     importProvidersFrom([
                           provideFirebaseApp(()=>initializeApp(environment.firebaseConfig)), 

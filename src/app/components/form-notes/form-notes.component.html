@@ -27,12 +27,37 @@
   </ion-item>
 
   <ion-toolbar>
-    <ion-button slot="start" shape="round" [color]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'" (click)="takeLocation()">
+
+    <ion-button 
+      slot="start" 
+      shape="round" 
+      [color]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'" 
+      (click)="takeLocation()"
+      [@btnAnimate]="btnAnimateLocation ? 'success' : 'primary'">
       <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
+      @if ((this.location.latitude && this.location.longitude)) {
+        <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+      } @else {
+        <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
+
+      }
     </ion-button>
-    <ion-button slot="end" shape="round" [color]="this.img ? 'success' : 'primary'" (click)="takePic()">
+
+    <ion-button
+      slot="end" 
+      shape="round" 
+      [color]="this.img ? 'success' : 'primary'"
+      (click)="takePic()"
+      [@btnAnimate]="btnAnimateImg ? 'success' : 'primary'">
       <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
+      @if (this.img) {
+        <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+      } @else {
+        <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
+
+      }
     </ion-button>
+
   </ion-toolbar>
 
   @if ((this.location.latitude && this.location.longitude)) {
@@ -44,7 +69,7 @@
 
   @if (this.img) {
     <ion-item>
-      <img [src]="'data:image/jpg;base64,'+ this.img"/> 
+      <img class="imgPicture" [src]="'data:image/jpg;base64,'+ this.img"/> 
     </ion-item>
   }
 

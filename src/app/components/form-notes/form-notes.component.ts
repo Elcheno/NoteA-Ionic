@@ -7,13 +7,30 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Position } from 'src/app/model/position';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 import { UIService } from 'src/app/services/ui.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-form-notes',
   templateUrl: './form-notes.component.html',
   styleUrls: ['./form-notes.component.scss'],
   standalone: true,
-  imports: [ IonicModule, FormsModule, ReactiveFormsModule, LeafletMapComponent ]
+  imports: [ IonicModule, FormsModule, ReactiveFormsModule, LeafletMapComponent ],
+  animations: [
+    trigger('btnAnimate', [
+      state('success', style({
+        width: '180px'
+      })),
+      state('primary', style({
+        width: '100px'
+      })),
+      transition('primary => success', [
+        animate('.5s')
+      ]),
+      transition('success => primary', [
+        animate('.25s')
+      ])
+    ])
+  ]
 })
 export class FormNotesComponent {
 
@@ -29,6 +46,8 @@ export class FormNotesComponent {
     latitude: '',
     longitude: ''
   }
+  public btnAnimateLocation: boolean = false;
+  public btnAnimateImg: boolean = false;
 
   constructor() {
     this.form = this.formB.group({
@@ -58,6 +77,8 @@ export class FormNotesComponent {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
         this.img = '';
+        this.btnAnimateImg = !this.btnAnimateImg;
+
       }
     } else {
       const image = await Camera.getPhoto({
@@ -65,7 +86,10 @@ export class FormNotesComponent {
         allowEditing: false,
         resultType: CameraResultType.Base64
       });
-      if (image.base64String) this.img = image.base64String;
+      if (image.base64String) {
+        this.img = image.base64String;
+        this.btnAnimateImg = !this.btnAnimateImg;
+      }
     }
 
   }
@@ -78,6 +102,8 @@ export class FormNotesComponent {
           latitude: '',
           longitude: ''
         };
+        this.btnAnimateLocation = !this.btnAnimateLocation;
+
       }
     } else {
       const coordinates = await Geolocation.getCurrentPosition();
@@ -86,6 +112,8 @@ export class FormNotesComponent {
           latitude: JSON.stringify(coordinates.coords.latitude), 
           longitude: JSON.stringify(coordinates.coords.longitude) 
         }
+        this.btnAnimateLocation = !this.btnAnimateLocation;
+
       }
     }
 
