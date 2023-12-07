@@ -26,8 +26,8 @@ export class FormNotesComponent {
   public form!: FormGroup;
   public img: string = '';
   public location: Position = {
-    latitude: 1000,
-    longitude: 1000
+    latitude: '',
+    longitude: ''
   }
 
   constructor() {
@@ -71,18 +71,21 @@ export class FormNotesComponent {
   }
 
   public async takeLocation() {
-    if (!(this.location.latitude === 1000 && this.location.longitude === 1000)) {
+    if ((this.location.latitude && this.location.longitude)) {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
         this.location = {
-          latitude: 1000,
-          longitude: 1000
+          latitude: '',
+          longitude: ''
         };
       }
     } else {
       const coordinates = await Geolocation.getCurrentPosition();
       if (coordinates && coordinates.coords.latitude && coordinates.coords.longitude) {
-        this.location = { latitude: coordinates.coords.latitude, longitude: coordinates.coords.longitude }
+        this.location = { 
+          latitude: JSON.stringify(coordinates.coords.latitude), 
+          longitude: JSON.stringify(coordinates.coords.longitude) 
+        }
       }
     }
 
@@ -91,7 +94,7 @@ export class FormNotesComponent {
   private resetForm() {
     this.form.reset();
     this.img = '';
-    this.location = { latitude: 1000, longitude: 1000 };
+    this.location = { latitude: '', longitude: '' };
   }
 
 }

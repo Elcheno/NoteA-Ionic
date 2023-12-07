@@ -62,8 +62,8 @@ export class UpdateNoteComponent implements OnInit {
     const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
     if (resultDismiss && resultDismiss === 'confirm') {
       this.note.position = {
-        latitude: 1000,
-        longitude: 1000
+        latitude: '',
+        longitude: ''
       }
     }
   }

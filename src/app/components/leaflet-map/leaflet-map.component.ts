@@ -10,9 +10,9 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   standalone: true,
   imports: [ LeafletModule ]
 })
-export class LeafletMapComponent implements OnInit, OnDestroy {
-  @Input() latitude: number | undefined = 100;
-  @Input() longitude: number | undefined = 100;
+export class LeafletMapComponent implements OnDestroy {
+  @Input() latitude: string | undefined = '';
+  @Input() longitude: string | undefined = '';
   
   options: MapOptions = {
     layers: [
@@ -32,7 +32,12 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
 
   onMapReady(map: Map) {
     if (this.latitude && this.longitude) {
-      marker([ this.latitude, this.longitude ], {
+      const coords = {
+        lat: JSON.parse(this.latitude),
+        lng: JSON.parse(this.longitude)
+      };
+      
+      marker([ coords.lat, coords.lng ], {
         icon: icon({
           ...Icon.Default.prototype.options,
           iconUrl: 'leaflet/marker-icon.png',
@@ -41,14 +46,16 @@ export class LeafletMapComponent implements OnInit, OnDestroy {
         }),
         autoPanOnFocus: true
       }).addTo(map);
-      map.setView(latLng(this.latitude, this.longitude));
+
+      map.setView(coords);
+
     } else {
       if(this.map) this.map.remove();
+
     }
   }
 
-  ngOnInit() {;
-  }
+  // ngOnInit() {}
 
   ngOnDestroy() {
     if(this.map) this.map.remove();
