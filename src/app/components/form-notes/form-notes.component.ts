@@ -46,8 +46,6 @@ export class FormNotesComponent {
     latitude: '',
     longitude: ''
   }
-  public btnAnimateLocation: boolean = false;
-  public btnAnimateImg: boolean = false;
 
   constructor() {
     this.form = this.formB.group({
@@ -77,7 +75,6 @@ export class FormNotesComponent {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
         this.img = '';
-        this.btnAnimateImg = !this.btnAnimateImg;
 
       }
     } else {
@@ -88,7 +85,6 @@ export class FormNotesComponent {
       });
       if (image.base64String) {
         this.img = image.base64String;
-        this.btnAnimateImg = !this.btnAnimateImg;
       }
     }
 
@@ -102,7 +98,6 @@ export class FormNotesComponent {
           latitude: '',
           longitude: ''
         };
-        this.btnAnimateLocation = !this.btnAnimateLocation;
 
       }
     } else {
@@ -112,7 +107,6 @@ export class FormNotesComponent {
           latitude: JSON.stringify(coordinates.coords.latitude), 
           longitude: JSON.stringify(coordinates.coords.longitude) 
         }
-        this.btnAnimateLocation = !this.btnAnimateLocation;
 
       }
     }

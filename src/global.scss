@@ -26,3 +26,22 @@
 @import "@ionic/angular/css/flex-utils.css";
 
 @import "~leaflet/dist/leaflet.css";
+
+
+
+@keyframes slide-right {
+  from {
+    transform: translateX(200%);
+  } to {
+    transform: translateX(0%);
+  }
+}
+
+
+// ::view-transition-old(root) {
+//   animation: 1s slide-left;
+// }
+
+::view-transition-new(root) {
+  animation: .5s slide-right;
+}

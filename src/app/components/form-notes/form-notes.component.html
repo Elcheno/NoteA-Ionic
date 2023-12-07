@@ -33,7 +33,7 @@
       shape="round" 
       [color]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'" 
       (click)="takeLocation()"
-      [@btnAnimate]="btnAnimateLocation ? 'success' : 'primary'">
+      [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
       <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
       @if ((this.location.latitude && this.location.longitude)) {
         <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
@@ -48,7 +48,7 @@
       shape="round" 
       [color]="this.img ? 'success' : 'primary'"
       (click)="takePic()"
-      [@btnAnimate]="btnAnimateImg ? 'success' : 'primary'">
+      [@btnAnimate]="this.img ? 'success' : 'primary'">
       <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
       @if (this.img) {
         <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
