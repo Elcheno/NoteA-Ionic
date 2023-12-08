@@ -10,7 +10,7 @@ import { IonicModule, ModalController } from '@ionic/angular'
 })
 export class PreviewImgComponent  implements OnInit {
 
-  @Input() img: string = '';
+  @Input() param: string = '';
 
   private modalS = inject(ModalController);
 

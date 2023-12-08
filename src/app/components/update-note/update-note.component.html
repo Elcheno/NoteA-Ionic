@@ -30,7 +30,8 @@
     <ion-toolbar>
 
       <ion-button 
-        slot="start" 
+        slot="start"
+        shape="round" 
         (click)="removeLocation()" 
         [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'" 
         [disabled]="!(this.location.latitude && this.location.longitude)"
@@ -44,6 +45,7 @@
 
       <ion-button 
         slot="end" 
+        shape="round" 
         (click)="removeImg()" 
         [color]="this.img ? 'success' : 'primary'" 
         [disabled]="!this.img"

@@ -17,7 +17,7 @@ import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
 })
 export class UpdateNoteComponent implements OnInit {
 
-  @Input() note!: Note;
+  @Input() param!: Note;
 
   private modalS = inject(ModalController);
   private formB = inject(FormBuilder);
@@ -39,13 +39,13 @@ export class UpdateNoteComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.note && this.note.title) {
-      const { key, date, img, position, ...aux } = this.note;
+    if (this.param && this.param.title) {
+      const { key, date, img, position, ...aux } = this.param;
       this.form.setValue(aux);
     }
 
-    this.img = this.note.img;
-    this.location = this.note.position;
+    this.img = this.param.img;
+    this.location = this.param.position;
   }
 
   cancel() {
@@ -55,10 +55,10 @@ export class UpdateNoteComponent implements OnInit {
   async confirm() {
     if (!this.form.valid) return;
     const aux: Note = {
-      key: this.note.key,
+      key: this.param.key,
       title: this.form.value.title,
       description: this.form.value.description,
-      date: this.note.date,
+      date: this.param.date,
       img: this.img,
       position: this.location
     };

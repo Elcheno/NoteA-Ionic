@@ -1,5 +1,5 @@
-import { Injectable,inject } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { Component, ComponentRef, Injectable,inject } from '@angular/core';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular/standalone';
 import { ActionSheetController } from '@ionic/angular';
 
@@ -11,6 +11,8 @@ export class UIService {
   private loadingC = inject(LoadingController);
   private toastC = inject(ToastController);
   private ascService = inject(ActionSheetController);
+  private modalService = inject(ModalController);
+
 
   private loadingElement!:HTMLIonLoadingElement | undefined;
 
@@ -71,4 +73,22 @@ export class UIService {
 
     return role;
   };
+
+  async showModal(component: any, componentProp: any): Promise<HTMLIonModalElement | undefined> {
+    try {
+      const modal = await this.modalService.create({
+        component: component,
+        componentProps: { param: componentProp }
+      });
+      
+      modal.present();
+      return modal;
+
+    } catch (err) {
+      console.error(err);
+      
+    }
+    return;
+
+  }
 }

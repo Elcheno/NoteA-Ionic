@@ -27,28 +27,26 @@ export class Tab1Page {
 
   async editNote(note: Note): Promise<void> {
     if (note && note.key) {
-      const modal = await this.modalS.create({
-        component: UpdateNoteComponent,
-        componentProps: { note: note }
-      });
-      modal.present();
+      const modal = await this.uiService.showModal(UpdateNoteComponent, note);
 
-      const { data, role } = await modal.onWillDismiss();
-      if (role === 'confirm') {
-        await this.uiService.showLoading();
+      if (modal) {
+        const { data, role } = await modal.onWillDismiss();
 
-        try {
-          await this.noteS.updateNote(data).then(()=> console.log('nota ha sido actulizada'));
-          await this.uiService.showToast("Nota actualizada correctamente", "success");
-
-        } catch (err) {
-          await this.uiService.showToast("Error al actualizar la nota", "danger");
-
-        } finally {
-          await this.uiService.hideLoading();
-
+        if (role === 'confirm') {
+          await this.uiService.showLoading();
+  
+          try {
+            await this.noteS.updateNote(data).then(()=> console.log('nota ha sido actulizada'));
+            await this.uiService.showToast("Nota actualizada correctamente", "success");
+  
+          } catch (err) {
+            await this.uiService.showToast("Error al actualizar la nota", "danger");
+  
+          } finally {
+            await this.uiService.hideLoading();
+  
+          }        
         }
-       
       }
     }
   }

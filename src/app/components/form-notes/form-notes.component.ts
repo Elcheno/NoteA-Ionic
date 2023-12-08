@@ -1,5 +1,5 @@
-import { Component,EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { IonicModule, LoadingController, ModalController } from '@ionic/angular'
+import { Component,EventEmitter, Output, inject } from '@angular/core';
+import { IonicModule, LoadingController } from '@ionic/angular'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from '../../model/note';
 import { Camera, CameraResultType } from '@capacitor/camera';
@@ -26,7 +26,6 @@ export class FormNotesComponent {
   private formB = inject(FormBuilder);
   public loadingS = inject(LoadingController);
   private uiService = inject(UIService);
-  private modalS = inject(ModalController);
 
   public form!: FormGroup;
   public img: string = '';
@@ -108,19 +107,11 @@ export class FormNotesComponent {
   }
 
   async showImg() {
-    const modal = await this.modalS.create({
-      component: PreviewImgComponent,
-      componentProps: { img: this.img }
-    });
-    modal.present();
+    this.uiService.showModal(PreviewImgComponent, this.img);
   }
 
   async showMap() {
-    const modal = await this.modalS.create({
-      component: PreviewMapComponent,
-      componentProps: { location: this.location }
-    });
-    modal.present();
+    this.uiService.showModal(PreviewMapComponent, this.location);
   }
 
 }

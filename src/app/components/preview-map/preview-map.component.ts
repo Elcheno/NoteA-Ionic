@@ -13,7 +13,7 @@ import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 })
 export class PreviewMapComponent  implements OnInit {
 
-  @Input() location: Position = {
+  @Input() param: Position = {
     latitude: '',
     longitude: ''
   }
@@ -24,7 +24,6 @@ export class PreviewMapComponent  implements OnInit {
 
   ngOnInit() {
     console.log('map-preview has loaded')
-    console.log(this.location)
   }
 
   confirm() {
