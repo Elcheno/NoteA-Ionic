@@ -4,8 +4,8 @@ import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from 'src/app/model/note';
 import { UIService } from 'src/app/services/ui.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Position } from 'src/app/model/position';
+import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
 
 @Component({
   selector: 'app-update-note',
@@ -13,22 +13,7 @@ import { Position } from 'src/app/model/position';
   styleUrls: ['./update-note.component.scss'],
   standalone: true,
   imports: [ IonicModule, FormsModule, ReactiveFormsModule ],
-  animations: [
-    trigger('btnAnimate', [
-      state('success', style({
-        width: '180px'
-      })),
-      state('primary', style({
-        width: '100px'
-      })),
-      transition('primary => success', [
-        animate('.5s')
-      ]),
-      transition('success => primary', [
-        animate('.25s')
-      ])
-    ])
-  ]
+  animations: [ transitionAnimationBtn ]
 })
 export class UpdateNoteComponent implements OnInit {
 

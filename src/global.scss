@@ -37,6 +37,22 @@
   }
 }
 
+@keyframes grow {
+  from {
+    max-width: 100px;
+  } to {
+    max-width: 180px;
+  }
+}
+
+@keyframes decrease {
+  from {
+    max-width: 180px;
+  } to {
+    max-width: 100px;
+  }
+}
+
 
 // ::view-transition-old(root) {
 //   animation: 1s slide-left;

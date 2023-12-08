@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Map Preview</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">BACK</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @defer {
+    <app-leaflet-map 
+    [latitude]="this.location.latitude" 
+    [longitude]="this.location.longitude">
+  </app-leaflet-map>
+  }
+</ion-content>

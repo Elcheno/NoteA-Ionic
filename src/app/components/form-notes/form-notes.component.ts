@@ -1,5 +1,5 @@
 import { Component,EventEmitter, OnInit, Output, inject } from '@angular/core';
-import { IonicModule, LoadingController } from '@ionic/angular'
+import { IonicModule, LoadingController, ModalController } from '@ionic/angular'
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Note } from '../../model/note';
 import { Camera, CameraResultType } from '@capacitor/camera';
@@ -7,7 +7,9 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Position } from 'src/app/model/position';
 import { LeafletMapComponent } from '../leaflet-map/leaflet-map.component';
 import { UIService } from 'src/app/services/ui.service';
-import { trigger, state, style, animate, transition } from '@angular/animations';
+import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
+import { PreviewImgComponent } from '../preview-img/preview-img.component';
+import { PreviewMapComponent } from '../preview-map/preview-map.component';
 
 @Component({
   selector: 'app-form-notes',
@@ -15,22 +17,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
   styleUrls: ['./form-notes.component.scss'],
   standalone: true,
   imports: [ IonicModule, FormsModule, ReactiveFormsModule, LeafletMapComponent ],
-  animations: [
-    trigger('btnAnimate', [
-      state('success', style({
-        width: '180px'
-      })),
-      state('primary', style({
-        width: '100px'
-      })),
-      transition('primary => success', [
-        animate('.5s')
-      ]),
-      transition('success => primary', [
-        animate('.25s')
-      ])
-    ])
-  ]
+  animations: [ transitionAnimationBtn ]
 })
 export class FormNotesComponent {
 
@@ -39,6 +26,7 @@ export class FormNotesComponent {
   private formB = inject(FormBuilder);
   public loadingS = inject(LoadingController);
   private uiService = inject(UIService);
+  private modalS = inject(ModalController);
 
   public form!: FormGroup;
   public img: string = '';
@@ -117,6 +105,22 @@ export class FormNotesComponent {
     this.form.reset();
     this.img = '';
     this.location = { latitude: '', longitude: '' };
+  }
+
+  async showImg() {
+    const modal = await this.modalS.create({
+      component: PreviewImgComponent,
+      componentProps: { img: this.img }
+    });
+    modal.present();
+  }
+
+  async showMap() {
+    const modal = await this.modalS.create({
+      component: PreviewMapComponent,
+      componentProps: { location: this.location }
+    });
+    modal.present();
   }
 
 }
