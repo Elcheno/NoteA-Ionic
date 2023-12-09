@@ -4,15 +4,14 @@ import { Note } from '../model/note';
 import { NoteService } from '../services/note.service';
 import { UIService } from '../services/ui.service';
 import { FormNotesComponent } from '../components/form-notes/form-notes.component';
-// import { Map } from 'leaflet';
-// import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { HeaderComponent } from '../components/header/header.component';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormNotesComponent ]
+  imports: [IonicModule, FormNotesComponent, HeaderComponent ]
 })
 export class Tab2Page {
 

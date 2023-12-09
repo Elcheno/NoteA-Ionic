@@ -30,13 +30,15 @@ bootstrapApplication(AppComponent, {
     provideIonicAngular(),
     importProvidersFrom([
                           provideFirebaseApp(()=>initializeApp(environment.firebaseConfig)), 
-                          provideFirestore(()=>getFirestore()),    
+                          provideFirestore(()=>getFirestore()),
                         ]), //new
     importProvidersFrom([
                           AngularFirestoreModule, 
                           AngularFireModule.initializeApp(environment.firebaseConfig)
                         ]), //old
     importProvidersFrom(IonicModule.forRoot({})), //for standalone
-    provideRouter(routes, withViewTransitions()),
+    provideRouter(routes, withViewTransitions({
+      skipInitialTransition: true
+    })),
   ],
 });

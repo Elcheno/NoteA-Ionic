@@ -10,13 +10,14 @@ import { UIService } from 'src/app/services/ui.service';
 import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
 import { PreviewImgComponent } from '../preview-img/preview-img.component';
 import { PreviewMapComponent } from '../preview-map/preview-map.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-notes',
   templateUrl: './form-notes.component.html',
   styleUrls: ['./form-notes.component.scss'],
   standalone: true,
-  imports: [ IonicModule, FormsModule, ReactiveFormsModule, LeafletMapComponent ],
+  imports: [ IonicModule, FormsModule, ReactiveFormsModule, LeafletMapComponent, CommonModule ],
   animations: [ transitionAnimationBtn ]
 })
 export class FormNotesComponent {
@@ -70,14 +71,26 @@ export class FormNotesComponent {
         allowEditing: false,
         resultType: CameraResultType.Base64
       });
-      if (image.base64String) {
-        this.img = image.base64String;
+
+      await this.uiService.showLoading();
+      try{
+        if (image.base64String) {
+          this.img = image.base64String;
+          Math.round((this.img.length / 1024))
+        }
+
+      } catch (err) {
+        console.error(err);
+
+      } finally {
+        await this.uiService.hideLoading();
+
       }
     }
 
   }
 
-  public async takeLocation() {
+  public async takeLocation(): Promise<void> {
     if ((this.location.latitude && this.location.longitude)) {
       const response = await this.uiService.dismissQuestion('Are you sure?');
       if (response === 'confirm') {
@@ -87,17 +100,27 @@ export class FormNotesComponent {
         };
 
       }
-    } else {
-      const coordinates = await Geolocation.getCurrentPosition();
-      if (coordinates && coordinates.coords.latitude && coordinates.coords.longitude) {
-        this.location = { 
-          latitude: JSON.stringify(coordinates.coords.latitude), 
-          longitude: JSON.stringify(coordinates.coords.longitude) 
-        }
+    } else {      
+      await this.uiService.showLoading();
+
+      try {
+        const coordinates = await Geolocation.getCurrentPosition();
+        if (coordinates && coordinates.coords.latitude && coordinates.coords.longitude) {
+          this.location = { 
+            latitude: JSON.stringify(coordinates.coords.latitude), 
+            longitude: JSON.stringify(coordinates.coords.longitude) 
+          }
+        } 
+
+      } catch (err) {
+        console.error(err)
+
+      } finally {
+        await this.uiService.hideLoading();
 
       }
-    }
 
+    }
   }
 
   private resetForm() {

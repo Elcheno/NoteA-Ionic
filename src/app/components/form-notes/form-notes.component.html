@@ -73,15 +73,14 @@
           </ion-card-header>
         
           <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
+            Here's a small text description for the card content.
+            Nothing more, nothing less.
           </ion-card-content>
         
-          <ion-button fill="clear" (click)="showMap()">LOOK</ion-button>
+          <div>
+            <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR LOCATION</ion-button>
+          </div>
         </ion-card>
-        <!-- <app-leaflet-map 
-          [latitude]="this.location.latitude" 
-          [longitude]="this.location.longitude"
-        ></app-leaflet-map> -->
       }
     
       @if (this.img) {
@@ -91,16 +90,19 @@
           </ion-card-header>
         
           <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
+            Size: {{ (this.img.length / 1024) | number }} kb
           </ion-card-content>
+
+          <div>
+            <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK IMAGE</ion-button>
+          </div>
         
-          <ion-button fill="clear" (click)="showImg()">LOOK</ion-button>
         </ion-card>
       }
     </div>
   
     <div>
-      <ion-button class="btnSubmit" type="submit" expand="block" [disabled]="!form.valid" slot="end" strong="true">SAVE NOTE</ion-button>
+      <ion-button class="btnSubmit" type="submit" expand="block" [disabled]="!form.valid" slot="end" strong="true" >SAVE NOTE</ion-button>
     </div>
 
   </form>

@@ -19,11 +19,11 @@ export class UIService {
   constructor() { }
 
   showLoading(msg?: string): Promise<void> {
-    return new Promise(async (resolve,reject)=> {
+    return new Promise(async (resolve, reject)=> {
       if (this.loadingElement) {
         resolve();
       } else {
-        this.loadingElement = await this.loadingC.create({message: msg});
+        this.loadingElement = await this.loadingC.create({ message: msg });
         this.loadingElement.present();
         resolve();
       }
@@ -34,6 +34,7 @@ export class UIService {
     if (!this.loadingElement) return;
     await this.loadingElement.dismiss();
     this.loadingElement = undefined;
+    return this.loadingElement;
   }
 
   async showToast(msg: string,
