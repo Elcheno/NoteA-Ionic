@@ -1,8 +1,11 @@
 <app-header [title]="'Notes List'"></app-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-list>
-    @for (note of noteS.notes$ | async; track note.key) {
+    @for (note of this.notes; track note.key) {
       <ion-item-sliding>
         <ion-item-options side="start">
           <ion-item-option color="primary">
@@ -15,12 +18,15 @@
           <p>{{note.description}}</p>
         </ion-item>
   
-        <ion-item-options side="end">
-          <ion-item-option color="danger" expandable>
+        <ion-item-options side="end" (ionSwipe)="deleteNote(note)">
+          <ion-item-option color="danger" expandable >
             <ion-icon slot="start" src="assets/icons/trash.svg" (click)="deleteNote(note)" style="zoom: 1.5;"></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
-    }    
+    }   
   </ion-list>
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+    <ion-infinite-scroll-content loadingText="Please wait..." loadingSpinner="crescent"></ion-infinite-scroll-content>
+  </ion-infinite-scroll> 
 </ion-content>

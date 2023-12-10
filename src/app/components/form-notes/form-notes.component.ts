@@ -127,6 +127,7 @@ export class FormNotesComponent {
     this.form.reset();
     this.img = '';
     this.location = { latitude: '', longitude: '' };
+    this.form.controls['datetimePicker'].setValue(new Date(Date.now()).toISOString());
   }
 
   async showImg() {
