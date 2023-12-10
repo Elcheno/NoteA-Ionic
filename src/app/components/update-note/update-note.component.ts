@@ -6,13 +6,16 @@ import { Note } from 'src/app/model/note';
 import { UIService } from 'src/app/services/ui.service';
 import { Position } from 'src/app/model/position';
 import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
+import { PreviewImgComponent } from '../preview-img/preview-img.component';
+import { PreviewMapComponent } from '../preview-map/preview-map.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-update-note',
   templateUrl: './update-note.component.html',
   styleUrls: ['./update-note.component.scss'],
   standalone: true,
-  imports: [ IonicModule, FormsModule, ReactiveFormsModule ],
+  imports: [ IonicModule, FormsModule, ReactiveFormsModule, CommonModule ],
   animations: [ transitionAnimationBtn ]
 })
 export class UpdateNoteComponent implements OnInit {
@@ -85,6 +88,14 @@ export class UpdateNoteComponent implements OnInit {
     if (resultDismiss && resultDismiss === 'confirm') {
       this.img = '';
     }
+  }
+
+  async showImg() {
+    this.uiService.showModal(PreviewImgComponent, this.img);
+  }
+
+  async showMap() {
+    this.uiService.showModal(PreviewMapComponent, this.location);
   }
 
 }

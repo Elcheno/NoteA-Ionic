@@ -38,7 +38,7 @@ export class NoteService {
       let query : CollectionReference | Query = ref;
       query = query.orderBy('date', 'desc');
       if (lastNoteDate) query = query.startAfter(lastNoteDate);
-      query = query.limit(16);
+      query = query.limit(22);
       return query;
     }).valueChanges({idField: 'key'}) as Observable<Note[]>;
   }
