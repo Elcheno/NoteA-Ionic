@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { IonicModule, LoadingController } from '@ionic/angular'
+import { IonicModule, LoadingController } from '@ionic/angular';
 import { Note } from '../model/note';
 import { NoteService } from '../services/note.service';
 import { UIService } from '../services/ui.service';

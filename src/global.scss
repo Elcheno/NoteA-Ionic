@@ -27,37 +27,7 @@
 
 @import "~leaflet/dist/leaflet.css";
 
-
-
-// @keyframes grow {
-//   from {
-//     max-width: 100px;
-//   } to {
-//     max-width: 180px;
-//   }
-// }
-
-// @keyframes decrease {
-//   from {
-//     max-width: 180px;
-//   } to {
-//     max-width: 100px;
-//   }
-// }
-
-
-// // ::view-transition-old(root) {
-// //   animation: 1s slide-left;
-// // }
-
-// @keyframes slide-right {
-//   from {
-//     transform: translateX(200%);
-//   } to {
-//     transform: translateX(0%);
-//   }
-// }
-
-// ::view-transition-new(root) {
-//   animation: .4s slide-right;
-// }
+@font-face {
+  font-family: 'Geist';
+  src: url('./assets/fonts/Geist-Thin.otf') format('otf');
+}
