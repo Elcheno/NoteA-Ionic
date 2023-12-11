@@ -18,3 +18,13 @@ ion-list > ion-item-sliding {
         scale: 100%;
     }
 }
+
+ion-spinner {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+}
+
+ion-infinite-scroll {
+    margin-top: 20px;
+}
