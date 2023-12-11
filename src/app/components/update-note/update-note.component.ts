@@ -27,6 +27,7 @@ export class UpdateNoteComponent implements OnInit {
   private uiService = inject(UIService);
   
   public form!: FormGroup;
+  public calendar!: HTMLIonDatetimeElement;
   public img: string = '';
   public location: Position = {
     latitude: '',
@@ -38,17 +39,16 @@ export class UpdateNoteComponent implements OnInit {
       title:['',[Validators.required,Validators.minLength(4)]],
       description:['']
     });
-
   }
 
   ngOnInit() {
-    if (this.param && this.param.title) {
+    if (this.param) {
       const { key, date, img, position, ...aux } = this.param;
       this.form.setValue(aux);
+      this.img = this.param.img;
+      this.location = this.param.position;
     }
 
-    this.img = this.param.img;
-    this.location = this.param.position;
   }
 
   cancel() {

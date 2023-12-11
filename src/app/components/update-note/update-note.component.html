@@ -14,91 +14,86 @@
   <form [formGroup]="form">
 
     <ion-item>
-      <ion-label>
+      <!-- <ion-label>
         Title
-      </ion-label>
-      <ion-input label="title" type="text" formControlName="title"></ion-input>
+      </ion-label> -->
+      <ion-input label="Title" type="text" formControlName="title"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label>
+      <!-- <ion-label>
         Description
-      </ion-label>
+      </ion-label> -->
       <ion-textarea label="Description" formControlName="description"></ion-textarea>
     </ion-item>
 
-    <ion-toolbar>
+  </form>
+  <ion-toolbar>
 
-      <ion-button 
-        slot="start"
-        shape="round" 
-        (click)="removeLocation()" 
-        [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'" 
-        [disabled]="!(this.location.latitude && this.location.longitude)"
-        [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
-        <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
-        @if ((this.location.latitude && this.location.longitude)) {
-          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-
-        }
-      </ion-button>
-
-      <ion-button 
-        slot="end" 
-        shape="round" 
-        (click)="removeImg()" 
-        [color]="this.img ? 'success' : 'primary'" 
-        [disabled]="!this.img"
-        [@btnAnimate]="this.img ? 'success' : 'primary'">
-        <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
-        @if (this.img) {
-          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-
-        }
-      </ion-button>
-
-    </ion-toolbar>
-
-    <div class="cards">
-
-      <div class="calendar">
-        <ion-datetime [disabled]="'true'"></ion-datetime>
-      </div>
-
+    <ion-button slot="start" shape="round" (click)="removeLocation()"
+      [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'"
+      [disabled]="!(this.location.latitude && this.location.longitude)"
+      [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
+      <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
       @if ((this.location.latitude && this.location.longitude)) {
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Map</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Here's a small text description for the card content.
-            Nothing more, nothing less.
-          </ion-card-content>
-        
-          <div>
-            <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR LOCATION</ion-button>
-          </div>
-        </ion-card>
-      }
-    
-      @if (this.img) {
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Image</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Size: {{ (this.img.length / 1024) | number }} kb
-          </ion-card-content>
+      <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
 
-          <div>
-            <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK IMAGE</ion-button>
-          </div>
-        
-        </ion-card>
       }
+    </ion-button>
+
+    <ion-button slot="end" shape="round" (click)="removeImg()" [color]="this.img ? 'success' : 'primary'"
+      [disabled]="!this.img" [@btnAnimate]="this.img ? 'success' : 'primary'">
+      <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
+      @if (this.img) {
+      <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+
+      }
+    </ion-button>
+
+  </ion-toolbar>
+
+  <div class="cards">
+
+    <div class="calendar">
+      <ion-datetime [disabled]="'true'" [ngModel]="this.param.date"></ion-datetime>
     </div>
 
-  </form>
+    @if ((this.location.latitude && this.location.longitude)) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Map</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Here's a small text description for the card content.
+        Nothing more, nothing less.
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR
+          LOCATION</ion-button>
+      </div>
+    </ion-card>
+    }
+
+    @if (this.img) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Image</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Size: {{ (this.img.length / 1024) | number }} kb
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK
+          IMAGE</ion-button>
+      </div>
+
+    </ion-card>
+    }
+  </div>
+
+
 </ion-content>
