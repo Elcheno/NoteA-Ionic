@@ -48,6 +48,10 @@ export class LeafletMapComponent implements OnDestroy {
       }).addTo(map);
 
       map.setView(coords);
+      
+      setTimeout( () =>{
+        map.invalidateSize(true);
+     }, 10);
 
     } else {
       if(this.map) this.map.remove();
