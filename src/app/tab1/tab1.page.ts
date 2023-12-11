@@ -65,8 +65,10 @@ export class Tab1Page implements OnInit {
           await this.uiService.showLoading();
 
           try {
-            await this.noteS.updateNote(data).then(() => console.log('nota ha sido actulizada'));
-            await this.uiService.showToast("Nota actualizada correctamente", "success");
+            await this.noteS.updateNote(data).then(async () => {
+              this.notes.splice(this.notes.indexOf(note), 1, data);
+              await this.uiService.showToast("Nota actualizada correctamente", "success");
+            });
 
           } catch (err) {
             await this.uiService.showToast("Error al actualizar la nota", "danger");
@@ -87,8 +89,10 @@ export class Tab1Page implements OnInit {
         await this.uiService.showLoading();
 
         try {
-          await this.noteS.deleteNote(note).then(() => console.log('nota eliminada'));
-          await this.uiService.showToast("Nota eliminada correctamente", "success");
+          await this.noteS.deleteNote(note).then( async () => {
+            this.notes.splice(this.notes.indexOf(note), 1);
+            await this.uiService.showToast("Nota eliminada correctamente", "success");
+          });
 
         } catch (err) {
           await this.uiService.showToast("Error al eliminar la nota", "danger");
