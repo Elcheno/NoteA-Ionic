@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { HeaderComponent } from '../components/header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { CobeWorldComponent } from '../components/cobe-world/cobe-world.component';
