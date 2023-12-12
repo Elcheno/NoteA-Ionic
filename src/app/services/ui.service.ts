@@ -47,7 +47,8 @@ export class UIService {
       duration: duration,
       position: position,
       color: color,
-      translucent: true
+      translucent: true,
+      positionAnchor: 'footerTab'
     });
 
     toast.present();
