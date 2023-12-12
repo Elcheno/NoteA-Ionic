@@ -8,6 +8,10 @@
     }
 }
 
+ion-list {
+    margin-top: 42px;
+}
+
 ion-list > ion-item-sliding {
     view-timeline-name: --item;
     view-timeline-axis: block;
@@ -37,15 +41,10 @@ ion-infinite-scroll {
     margin-top: 20px;
 }
 
-// .search-toolbar {
-     // position: fixed;
-// }
+.search-toolbar {
+     position: fixed;
+}
 
-// ion-searchbar {
-//     text-align: center;
-//     transition: all .5s;
-// }
-
-// ion-searchbar:active {
-//     text-align: start;
-// }
+ion-searchbar {
+    --border-radius: 7px;
+}
