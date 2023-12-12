@@ -24,7 +24,7 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvasContainer') canvasContainer!: ElementRef;
   @ViewChild('canvas') canvas!: ElementRef;
 
-  private globe: any; // Adjust the type if there is a specific type for createGlobe
+  private globe: any;
 
   private pointerInteracting: number | null = null;
   private pointerInteractionMovement = 0;
@@ -67,6 +67,7 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
       devicePixelRatio: 2,
       width: width * 2,
       height: width * 2,
+      opacity: .6,
       phi: 0,
       theta: 0.3,
       dark: 1,
@@ -76,11 +77,24 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
       baseColor: [1, 1, 1],
       markerColor: [251 / 255, 100 / 255, 21 / 255],
       glowColor: [1.2, 1.2, 1.2],
-      markers: [],
-      onRender: (state: any) => {  
-        //console.log(this.phi);     
-        state['phi'] = this.pointerInteracting ? this.pointerInteractionMovement : this.phi;
-        this.phi = this.pointerInteracting ? this.pointerInteractionMovement : this.phi + 0.01;
+      markers: [
+        { location: [37.7595, -122.4367], size: 0.03 },
+        { location: [40.7128, -74.006], size: 0.1 },
+        { location: [37.6667879, -4.7248773], size: 0.1 },
+      ],
+      onRender: (state: any) => {
+
+        if (this.pointerInteracting && this.pointerInteractionMovement != this.phi) {
+
+          state['phi'] = this.phi + this.pointerInteractionMovement;
+          this.phi = this.phi + this.pointerInteractionMovement;
+
+        } else {
+
+          state['phi'] = this.phi;
+          this.phi = this.phi + 0.01;
+
+        }
       },
     });
 
@@ -94,76 +108,84 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     fromEvent(canvasElement, 'touchstart').subscribe((e: any) => {
-      console.log('phone start')
-      console.log(e.touches[0].clientX)
       this.pointerInteracting = e.touches[0].clientX - this.pointerInteractionMovement;
+      
+    });
+
+    fromEvent(canvasElement, 'touchend').subscribe(() => {
+      this.pointerInteracting = null;
+      this.pointerInteractionMovement = 0;
+
+      setTimeout(()=>{
+        this.createHandlerMovementPhone(canvasElement);
+      }, 200);
+
     });
     
-
     fromEvent(canvasElement, 'pointerup').subscribe(() => {
       this.pointerInteracting = null;
+      this.pointerInteractionMovement = 0;
       canvasElement.style.cursor = 'grab';
+
       setTimeout(()=>{
         this.createHandlerMovement(canvasElement);
       }, 200);
     });
 
-    fromEvent(canvasElement, 'pointerout').subscribe(() => {
-      this.pointerInteracting = null;
-      canvasElement.style.cursor = 'grab';
-    });
-
-
-    fromEvent(canvasElement, 'touchend').subscribe(() => {
-      console.log('phone end')
-      this.pointerInteracting = null;
-      setTimeout(()=>{
-        this.createHandlerMovementPhone(canvasElement);
-      }, 200);
-    });
-
-
+    // Funcion solo para dispositivos no tactiles
+    if (window.innerWidth > 1024) {
+      this.createHandlePointerOut(canvasElement);
+    }
 
     this.createHandlerMovement(canvasElement);
     this.createHandlerMovementPhone(canvasElement);
 
   }
 
-  private createHandlerMovement(canvasElement: any){
+  private createHandlerMovement(canvasElement: HTMLCanvasElement){
     fromEvent<MouseEvent>(canvasElement, 'mousemove')
       .pipe(
         takeUntil(fromEvent(canvasElement, 'pointerup')),
         switchMap((e) => {
+
           if (this.pointerInteracting !== null) {
             const delta = e.clientX - this.pointerInteracting;
-            this.pointerInteractionMovement = delta/200;
-            return [delta / 200];
+            this.pointerInteractionMovement = delta / 2000;
+            return [delta / 2000];
+
           } else {
             return [];
+
           }
         })
-      ).subscribe(e => {
-        console.log(e);
-      })
+      ).subscribe(e => {})
   }
 
-  private createHandlerMovementPhone(canvasElement: any){
+  private createHandlerMovementPhone(canvasElement: HTMLCanvasElement){
     fromEvent<TouchEvent>(canvasElement, 'touchmove')
     .pipe(
       takeUntil(fromEvent(canvasElement, 'touchend')),
       switchMap((e) => {
+
         if (this.pointerInteracting !== null && e.touches) {
-          console.log(e.touches[0].clientX + " | " + this.pointerInteracting)
           const delta = e.touches[0].clientX - this.pointerInteracting;
-          this.pointerInteractionMovement = delta / 0.01;
-          return [delta / 200];
+          this.pointerInteractionMovement = delta / 2000;
+          return [delta / 2000];
+
         } else {
           return [];
+
         }
       })
-    ).subscribe(e => {
-      console.log(e);
-    })
+    ).subscribe(e => {})
+  }
+
+  private createHandlePointerOut(canvasElement: HTMLCanvasElement) {
+    fromEvent(canvasElement, 'pointerout').subscribe(() => {
+      this.pointerInteracting = null;
+      this.pointerInteractionMovement = 0;
+      canvasElement.style.cursor = 'grab';
+    });
   }
   
 }
