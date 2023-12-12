@@ -33,12 +33,23 @@ export class NoteService {
     return this.myCollection.get();
   }
 
-  readPaginate(lastNoteDate: string) {
+  readPaginate(lastNoteDate: string, params?: string) {
     return this.fireStore.collection(environment.firebaseConfig.collectionName, ref => {
       let query : CollectionReference | Query = ref;
-      query = query.orderBy('date', 'desc');
-      if (lastNoteDate) query = query.startAfter(lastNoteDate);
-      query = query.limit(22);
+
+      if (params) {
+        query = query.orderBy('title', 'asc').startAt(params).endAt(params + '~');
+
+      } else {
+        query = query.orderBy('date', 'desc');
+        if (lastNoteDate) {
+          query = query.startAfter(lastNoteDate);
+
+        } 
+        query = query.limit(22);
+        
+      }
+      
       return query;
     }).valueChanges({idField: 'key'}) as Observable<Note[]>;
   }

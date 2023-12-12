@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { IonicModule, RefresherCustomEvent, InfiniteScrollCustomEvent } from '@ionic/angular';
+import { IonicModule, RefresherCustomEvent, InfiniteScrollCustomEvent, SearchbarCustomEvent } from '@ionic/angular';
 import { NoteService } from '../services/note.service';
 import { Note } from '../model/note';
 import { CommonModule } from '@angular/common';
@@ -32,16 +32,36 @@ export class Tab1Page implements OnInit {
     this.getNotes();
   }
 
-  getNotes(): Promise<void> {
+  getNotes(overwrite: boolean = false, params?: string): Promise<void> {
     return new Promise((resolve, reject) => {
       try {
-        this.noteS.readPaginate(this.lastNoteDate).pipe(take(1)).subscribe(response => {
-          if(response) {
-            for(const note of response) {
-              this.notes.push(note as Note);
+        this.noteS.readPaginate(this.lastNoteDate, params).pipe(take(1)).subscribe(response => {
+          if(response && response.length > 0) {
+            
+            if (overwrite) {
+              this.notes = response;
+
+            } else {
+              for(const note of response) {
+                this.notes.push(note as Note);
+  
+              }
+
             }
-            this.lastNoteDate = this.notes[this.notes.length - 1].date;
+
+            if (params) {
+              this.lastNoteDate = '';
+
+            } else {
+              this.lastNoteDate = this.notes[this.notes.length - 1].date;
+
+            }
+
             resolve();
+            
+          } else {
+            resolve();
+
           }
         });
 
@@ -105,6 +125,16 @@ export class Tab1Page implements OnInit {
     }
   }
 
+  handleInput(event: SearchbarCustomEvent) {
+    if(event.detail.value) {
+      this.getNotes(true, event.detail.value);
+
+    } else {
+      this.getNotes(true);
+
+    }
+  }
+
   handleRefresh(event: RefresherCustomEvent) {
     setTimeout(() => {
       this.notes = [];
@@ -116,7 +146,9 @@ export class Tab1Page implements OnInit {
 
   onIonInfinite(event: InfiniteScrollCustomEvent) {
     setTimeout(() => {
-      this.getNotes().then(() => event.target.complete());
+      this.getNotes().then(() => {
+        event.target.complete();
+      });
     }, 1000);
   }
 

@@ -1,14 +1,3 @@
-
-
-ion-list > ion-item-sliding {
-    view-timeline-name: --item;
-    view-timeline-axis: block;
-    animation-timeline: --item;
-    animation-name: showlist;
-    animation-range: entry 15% cover 20%;
-    animation-fill-mode: both;
-} 
-
 @keyframes showlist {
     from {
         //opacity: 0;
@@ -18,6 +7,15 @@ ion-list > ion-item-sliding {
         scale: 100%;
     }
 }
+
+ion-list > ion-item-sliding {
+    view-timeline-name: --item;
+    view-timeline-axis: block;
+    animation-timeline: --item;
+    animation-name: showlist;
+    animation-range: entry 15% cover 20%;
+    animation-fill-mode: both;
+} 
 
 ion-spinner {
     position: absolute;
@@ -31,3 +29,16 @@ ion-spinner {
 ion-infinite-scroll {
     margin-top: 20px;
 }
+
+// .search-toolbar {
+     // position: fixed;
+// }
+
+// ion-searchbar {
+//     text-align: center;
+//     transition: all .5s;
+// }
+
+// ion-searchbar:active {
+//     text-align: start;
+// }
