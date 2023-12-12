@@ -33,10 +33,10 @@ export class Tab1Page implements OnInit {
   }
 
   getNotes(overwrite: boolean = false, params?: string): Promise<void> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _reject) => {
       try {
         this.noteS.readPaginate(this.lastNoteDate, params).pipe(take(1)).subscribe(response => {
-          if(response && response.length > 0) {
+          if (response) {
             
             if (overwrite) {
               this.notes = response;
@@ -57,18 +57,19 @@ export class Tab1Page implements OnInit {
 
             }
 
-            resolve();
-            
           } else {
-            resolve();
+            this.uiService.showToast("Error to charge note's list", 'danger');
+            throw new Error('Firebase not response');
 
           }
         });
 
-      } catch (err) {
+      } catch (err) {        
+        this.uiService.showToast("Error to charge note's list", 'danger');
         console.error(err);
-        this.uiService.showToast("Error to charge note's list");
-        reject(err);
+
+      } finally {
+        resolve();
 
       }
     })

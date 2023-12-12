@@ -17,6 +17,12 @@ ion-list > ion-item-sliding {
     animation-fill-mode: both;
 } 
 
+@media (width > 768px) {
+    ion-list > ion-item-sliding {
+        animation-range: entry 5% cover 12%;
+    } 
+}
+
 ion-spinner {
     position: absolute;
     top: 0;
@@ -24,6 +30,7 @@ ion-spinner {
     right: 0;
     bottom: 0;
     margin: auto;
+    scale: 2.5;
 }
 
 ion-infinite-scroll {
