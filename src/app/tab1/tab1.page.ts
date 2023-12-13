@@ -25,6 +25,8 @@ export class Tab1Page implements OnInit {
   public orderBy: OrderBy = 'asc';
   private lastNoteDate: string = '';
 
+  private onQueryDataBase: boolean = false;
+
   constructor() {}
 
   ngOnInit() {
