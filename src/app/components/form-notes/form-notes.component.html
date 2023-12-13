@@ -6,14 +6,14 @@
         <!-- <ion-label>
           Title
         </ion-label> -->
-        <ion-input label="Title" type="text" formControlName="title"></ion-input>
+        <ion-input labelPlacement="floating" label="Title" type="text" formControlName="title"></ion-input>
       </ion-item>
     
       <ion-item>
         <!-- <ion-label>
           Description
         </ion-label> -->
-        <ion-textarea label="Description" formControlName="description"></ion-textarea>
+        <ion-textarea labelPlacement="floating" label="Description" [autoGrow]="true" formControlName="description"></ion-textarea>
       </ion-item>
     
       <ion-item>
@@ -73,8 +73,7 @@
           </ion-card-header>
         
           <ion-card-content>
-            Here's a small text description for the card content.
-            Nothing more, nothing less.
+            Exact location of your note
           </ion-card-content>
         
           <div>

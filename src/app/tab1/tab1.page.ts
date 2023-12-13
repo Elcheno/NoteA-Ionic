@@ -8,6 +8,7 @@ import { UIService } from '../services/ui.service';
 import { OrderBy } from '../model/orderBy';
 import { HeaderComponent } from '../components/header/header.component';
 import { take } from 'rxjs';
+import { ViewNoteComponent } from '../components/view-note/view-note.component';
 
 @Component({
   selector: 'app-tab1',
@@ -124,6 +125,10 @@ export class Tab1Page implements OnInit {
         }
       }
     }
+  }
+
+  showNote(note: Note) {
+    if(note) this.uiService.showModal(ViewNoteComponent, note);
   }
 
   handleInput(event: SearchbarCustomEvent) {

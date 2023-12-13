@@ -1,0 +1,30 @@
+.content-description {
+  text-align: start;
+  border-radius: 10px;
+
+}
+
+.cards {
+  display: grid;
+  grid-template-rows: auto 1fr 1fr;
+  row-gap: 1.25em;
+}
+
+ion-card {
+  display: grid;
+}
+
+ion-card > div {
+  padding: 10px;
+  align-items: end;
+  display: grid;
+}
+
+ion-datetime {
+  margin: 1.25em 10px 10px;
+}
+
+.calendar{
+  display: grid;
+  place-content: center;
+}

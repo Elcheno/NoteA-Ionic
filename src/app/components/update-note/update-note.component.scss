@@ -1,9 +1,18 @@
-ion-toolbar {
-  padding: 0 10px 0 10px;
+.toolbar-custom {
+  padding: 20px 10px;
+  border-radius: 10px;
+  display: grid;
+  row-gap: .5em;
 }
 
-ion-toolbar > ion-button {
+.buttons-container > ion-button {
   width: 100%;
+}
+
+.input-item {
+  border-radius: 10px;
+  //  --ion-item-background: rgb(98, 98, 98);
+   margin-bottom: 5px;
 }
 
 .cards {
@@ -14,6 +23,7 @@ ion-toolbar > ion-button {
 
 ion-card {
   display: grid;
+  // --background: rgb(42, 42, 42);
 }
 
 ion-card > div {
@@ -24,9 +34,20 @@ ion-card > div {
 
 ion-datetime {
   margin: 1.25em 10px 10px;
+  border-radius: 10px;
 }
 
 .calendar{
   display: grid;
   place-content: center;
+}
+
+// .buttons-container {
+  // display: grid;
+  // grid-template-columns: auto auto;
+  // justify-content: space-between;
+// }
+
+.input-item-description {
+  height: auto;
 }

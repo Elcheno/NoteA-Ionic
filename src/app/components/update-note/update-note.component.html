@@ -13,49 +13,48 @@
 <ion-content class="ion-padding">
   <form [formGroup]="form">
 
-    <ion-item>
-      <!-- <ion-label>
-        Title
-      </ion-label> -->
-      <ion-input label="Title" type="text" formControlName="title"></ion-input>
-    </ion-item>
+    <ion-toolbar class="toolbar-custom">
 
-    <ion-item>
-      <!-- <ion-label>
-        Description
-      </ion-label> -->
-      <ion-textarea label="Description" formControlName="description"></ion-textarea>
-    </ion-item>
+      <ion-item class="input-item">
+        <ion-input labelPlacement="floating" label="Title" type="text" formControlName="title"></ion-input>
+      </ion-item>
+
+      <ion-item class="input-item input-item-description">
+        <ion-textarea labelPlacement="floating" label="Description" [autoGrow]="true" formControlName="description"></ion-textarea>
+      </ion-item>
+
+      <ion-toolbar  class="buttons-container">
+        <ion-button slot="start" shape="round" (click)="removeLocation()"
+          [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'"
+          [disabled]="!(this.location.latitude && this.location.longitude)"
+          [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
+          <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
+          @if ((this.location.latitude && this.location.longitude)) {
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+  
+          }
+        </ion-button>
+  
+        <ion-button slot="end" shape="round" (click)="removeImg()" [color]="this.img ? 'success' : 'primary'"
+          [disabled]="!this.img" [@btnAnimate]="this.img ? 'success' : 'primary'">
+          <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
+          @if (this.img) {
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+  
+          }
+        </ion-button>
+      </ion-toolbar>
+
+    </ion-toolbar>
+
+
 
   </form>
-  <ion-toolbar>
-
-    <ion-button slot="start" shape="round" (click)="removeLocation()"
-      [color]="!(this.location.latitude && this.location.longitude) ? 'primary' : 'success'"
-      [disabled]="!(this.location.latitude && this.location.longitude)"
-      [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
-      <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
-      @if ((this.location.latitude && this.location.longitude)) {
-      <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-
-      }
-    </ion-button>
-
-    <ion-button slot="end" shape="round" (click)="removeImg()" [color]="this.img ? 'success' : 'primary'"
-      [disabled]="!this.img" [@btnAnimate]="this.img ? 'success' : 'primary'">
-      <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
-      @if (this.img) {
-      <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-
-      }
-    </ion-button>
-
-  </ion-toolbar>
 
   <div class="cards">
 
     <div class="calendar">
-      <ion-datetime [disabled]="'true'" [ngModel]="this.param.date"></ion-datetime>
+      <ion-datetime [disabled]="'true'" [value]="this.param.date"></ion-datetime>
     </div>
 
     @if ((this.location.latitude && this.location.longitude)) {
@@ -65,8 +64,7 @@
       </ion-card-header>
 
       <ion-card-content>
-        Here's a small text description for the card content.
-        Nothing more, nothing less.
+        Exact location of your note
       </ion-card-content>
 
       <div>
