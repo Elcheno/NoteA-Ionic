@@ -25,37 +25,35 @@ export class Tab1Page implements OnInit {
   public orderBy: OrderBy = 'asc';
   private lastNoteDate: string = '';
 
-  private onQueryDataBase: boolean = false;
-
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.notes = [];
     this.getNotes();
   }
 
-  getNotes(overwrite: boolean = false, params?: string): Promise<void> {
+  getNotes(overwrite: boolean = false, params: string = ''): Promise<void> {
     return new Promise((resolve, _reject) => {
       try {
         this.noteS.readPaginate(this.lastNoteDate, params).pipe(take(1)).subscribe(response => {
           if (response) {
             
-            if (overwrite) {
+            if ((!overwrite && !params && !this.lastNoteDate)) {
               this.notes = response;
-
-            } else {
-              for(const note of response) {
-                this.notes.push(note as Note);
-  
-              }
-
-            }
-
-            if (params) {
-              this.lastNoteDate = '';
-
-            } else {
               this.lastNoteDate = this.notes[this.notes.length - 1].date;
+
+            } else {
+              if (overwrite) { this.notes = response; }
+              else {
+                for (const note of response) {
+                  this.notes.push(note as Note);
+                }
+              }  
+
+              if (params) { this.lastNoteDate = ''; } 
+              else {
+                this.lastNoteDate = this.notes[this.notes.length - 1].date;
+              }
 
             }
 
@@ -66,7 +64,7 @@ export class Tab1Page implements OnInit {
           }
         });
 
-      } catch (err) {        
+      } catch (err) {
         this.uiService.showToast("Error to charge note's list", 'danger');
         console.error(err);
 
@@ -112,7 +110,7 @@ export class Tab1Page implements OnInit {
         await this.uiService.showLoading();
 
         try {
-          await this.noteS.deleteNote(note).then( async () => {
+          await this.noteS.deleteNote(note).then(async () => {
             this.notes.splice(this.notes.indexOf(note), 1);
             await this.uiService.showToast("Nota eliminada correctamente", "success");
           });
@@ -129,7 +127,8 @@ export class Tab1Page implements OnInit {
   }
 
   handleInput(event: SearchbarCustomEvent) {
-    if(event.detail.value) {
+    this.lastNoteDate = '';
+    if (event.detail.value) {
       this.getNotes(true, event.detail.value);
 
     } else {
@@ -140,19 +139,23 @@ export class Tab1Page implements OnInit {
 
   handleRefresh(event: RefresherCustomEvent) {
     setTimeout(() => {
-      this.notes = [];
       this.lastNoteDate = '';
-      this.getNotes();
-      event.target.complete();
+      this.getNotes(true).then(() => {
+        event.target.complete();
+
+      });
+
     }, 1000);
   }
 
   onIonInfinite(event: InfiniteScrollCustomEvent) {
-    setTimeout(() => {
-      this.getNotes().then(() => {
-        event.target.complete();
-      });
-    }, 1000);
+      setTimeout(() => {
+        this.getNotes().then(() => {
+          event.target.complete();
+
+        });
+      }, 1000);
+
   }
 
 }

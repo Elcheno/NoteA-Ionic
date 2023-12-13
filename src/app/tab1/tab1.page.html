@@ -4,11 +4,12 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  
   @defer (when this.notes; on timer(1s)) {
-  <ion-toolbar class="search-toolbar">
-    <ion-searchbar animated="true" placeholder="Search" show-clear-button="always" [debounce]="1000"
-      (ionInput)="handleInput($event)"></ion-searchbar>
-  </ion-toolbar>
+    <ion-toolbar class="search-toolbar">
+      <ion-searchbar animated="true" placeholder="Search" show-clear-button="always" [debounce]="1000"
+        (ionInput)="handleInput($event)"></ion-searchbar>
+    </ion-toolbar>
 
   <ion-list>
     @for (note of this.notes; track note.key) {
