@@ -24,7 +24,7 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('canvasContainer') canvasContainer!: ElementRef;
   @ViewChild('canvas') canvas!: ElementRef;
 
-  private globe: any;
+  private globe: any; // A  private globe: any;
 
   private pointerInteracting: number | null = null;
   private pointerInteractionMovement = 0;
@@ -187,7 +187,4 @@ export class CobeComponent implements OnInit, AfterViewInit, OnDestroy {
       canvasElement.style.cursor = 'grab';
     });
   }
-  
 }
-
-
