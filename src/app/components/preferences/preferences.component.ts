@@ -33,11 +33,7 @@ export class PreferencesComponent  implements OnInit {
 
   async darkToggleChange(event: ToggleCustomEvent) {
     if (!event) return;
-
-    if (event) {
-      this.isDark = event.detail.checked;
-    }
-
+    this.isDark = event.detail.checked;
     document.body.classList.toggle('dark');
 
   }

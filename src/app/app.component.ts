@@ -21,10 +21,11 @@ export class AppComponent implements OnInit {
 
     } else {
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+      console.log(prefersDark)
 
       await Preferences.set({
         key: 'dark',
-        value: prefersDark ? 'on' : 'off'
+        value: prefersDark.matches ? 'on' : 'off'
       });
       if (prefersDark) document.body.classList.add('dark');
       else document.body.classList.remove('dark');
