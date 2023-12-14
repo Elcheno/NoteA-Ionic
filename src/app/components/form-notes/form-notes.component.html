@@ -8,14 +8,15 @@
         </ion-label> -->
         <ion-input labelPlacement="floating" label="Title" type="text" formControlName="title"></ion-input>
       </ion-item>
-    
+
       <ion-item>
         <!-- <ion-label>
           Description
         </ion-label> -->
-        <ion-textarea labelPlacement="floating" label="Description" [autoGrow]="true" formControlName="description"></ion-textarea>
+        <ion-textarea labelPlacement="floating" label="Description" [autoGrow]="true"
+          formControlName="description"></ion-textarea>
       </ion-item>
-    
+
       <ion-item>
         <ion-label>
           Date
@@ -27,82 +28,111 @@
           </ng-template>
         </ion-modal>
       </ion-item>
-    
+
       <ion-toolbar>
-    
-        <ion-button 
-          slot="start" 
-          shape="round" 
-          [color]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'" 
-          (click)="takeLocation()"
+
+        <ion-button slot="start" shape="round"
+          [color]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'" (click)="takeLocation()"
           [@btnAnimate]="(this.location.latitude && this.location.longitude) ? 'success' : 'primary'">
           <ion-icon slot="icon-only" src="assets/icons/compass.svg"></ion-icon>
           @if ((this.location.latitude && this.location.longitude)) {
-            <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-  
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+
           } @else {
-            <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
-    
+          <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
+
           }
         </ion-button>
-    
-        <ion-button
-          slot="end" 
-          shape="round" 
-          [color]="this.img ? 'success' : 'primary'"
-          (click)="takePic()"
+
+        <ion-button slot="end" shape="round" [color]="this.img ? 'success' : 'primary'" (click)="takePic()"
           [@btnAnimate]="this.img ? 'success' : 'primary'">
           <ion-icon slot="icon-only" src="assets/icons/image.svg"></ion-icon>
           @if (this.img) {
-            <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
-  
+          <ion-icon slot="icon-only" src="assets/icons/trash.svg"></ion-icon>
+
           } @else {
-            <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
-    
+          <ion-icon slot="icon-only" src="assets/icons/add-outline.svg"></ion-icon>
+
           }
         </ion-button>
-    
+
       </ion-toolbar>
     </div>
 
-    <div class="cards">
-      @if ((this.location.latitude && this.location.longitude)) {
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Map</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Exact location of your note
-          </ion-card-content>
-        
-          <div>
-            <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR LOCATION</ion-button>
-          </div>
-        </ion-card>
-      }
-    
-      @if (this.img) {
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>Image</ion-card-title>
-          </ion-card-header>
-        
-          <ion-card-content>
-            Size: {{ (this.img.length / 1024) | number }} kb
-          </ion-card-content>
-
-          <div>
-            <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK IMAGE</ion-button>
-          </div>
-        
-        </ion-card>
-      }
+    <div style="position: fixed; top: 90%; z-index: 100; width: 100%;">
+      <ion-button class="btnSubmit" type="submit" expand="block" [disabled]="!form.valid" slot="end" strong="true">SAVE
+        NOTE</ion-button>
     </div>
-  
-    <div>
-      <ion-button class="btnSubmit" type="submit" expand="block" [disabled]="!form.valid" slot="end" strong="true" >SAVE NOTE</ion-button>
-    </div>
-
   </form>
+
+  <div class="cards">
+    @if ((this.location.latitude && this.location.longitude)) {
+    <ion-card>
+      <ion-icon id="click-trigger-map" name="information-circle-outline" class="icon-info-card"></ion-icon>
+      <ion-popover trigger="click-trigger-map" triggerAction="click" side="left" alignment="start">
+        <ng-template>
+          <ion-content class="ion-padding">Click on <span class="popoyer-btn-primary">check your location↙</span> to
+            view it and click on the left green button to delete it.</ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-card-header>
+        <ion-card-title>Map</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content style="grid-template-columns: auto 28px;">
+        Exact location of your note
+        <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR
+          LOCATION</ion-button>
+      </div>
+    </ion-card>
+    }
+
+    @if (this.img) {
+    <ion-card>
+      <ion-icon id="click-trigger-img" name="information-circle-outline" class="icon-info-card"></ion-icon>
+      <ion-popover trigger="click-trigger-img" triggerAction="click" side="left" alignment="start">
+        <ng-template>
+          <ion-content class="ion-padding">Click on <span class="popoyer-btn-primary">check image↙</span> to view it and
+            click on the green right button to delete it.</ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-card-header>
+        <ion-card-title>Image</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content [style]="this.img.length / 1024 >= 1500 ? 'color: red; background-color: #ff9696;' : ''">
+        Size: <span>{{ (this.img.length / 1024) | number }} kb</span>
+
+        @if (this.img.length / 1024 >= 1500) {
+        <ion-icon id="click-trigger-imgError" name="information-circle-outline"
+          class="icon-info-card icon-info-error"></ion-icon>
+        <ion-popover trigger="click-trigger-imgError" triggerAction="click" side="left" alignment="start">
+          <ng-template>
+            <ion-content class="ion-padding">Error image size exceeded, size cannot exceed 1,500 kb</ion-content>
+          </ng-template>
+        </ion-popover>
+
+        } @else {
+        <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+
+        }
+
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK
+          IMAGE</ion-button>
+      </div>
+
+    </ion-card>
+    }
+  </div>
+
+
 </ion-content>

@@ -54,3 +54,34 @@
 
 
 
+
+.popoyer-btn-primary {
+  color: #428cff; 
+  font-weight: bold;
+}
+
+ion-card {
+  display: grid;
+  border-radius: 10px;
+}
+
+ion-card ion-card-content {
+  padding: 10px 16px;
+  margin: 0px 8px;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto auto 28px;
+  border-radius: 100px
+}
+
+.icon-info-card {
+  justify-self: end;
+  margin: 3px 3px 0 0;
+  scale: 1.2;
+}
+
+.success-icon {
+  justify-self: center;
+  scale: 2;
+  color: #2fdf75;
+}

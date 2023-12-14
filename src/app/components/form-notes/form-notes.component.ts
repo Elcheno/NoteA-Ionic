@@ -11,6 +11,8 @@ import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
 import { PreviewImgComponent } from '../preview-img/preview-img.component';
 import { PreviewMapComponent } from '../preview-map/preview-map.component';
 import { CommonModule } from '@angular/common';
+import { informationCircleOutline, checkmarkCircleOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-form-notes',
@@ -36,6 +38,8 @@ export class FormNotesComponent {
   }
 
   constructor() {
+    addIcons({ informationCircleOutline, checkmarkCircleOutline });
+    
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
       description:[''],
@@ -60,7 +64,7 @@ export class FormNotesComponent {
 
   public async takePic() {
     if (this.img) {
-      const response = await this.uiService.dismissQuestion('Are you sure?');
+      const response = await this.uiService.dismissQuestion('Are you sure you want to delete the image?');
       if (response === 'confirm') {
         this.img = '';
 
@@ -92,7 +96,7 @@ export class FormNotesComponent {
 
   public async takeLocation(): Promise<void> {
     if ((this.location.latitude && this.location.longitude)) {
-      const response = await this.uiService.dismissQuestion('Are you sure?');
+      const response = await this.uiService.dismissQuestion('Are you sure to delete the location?');
       if (response === 'confirm') {
         this.location = {
           latitude: '',

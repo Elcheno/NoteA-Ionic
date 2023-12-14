@@ -26,14 +26,14 @@ export class Tab2Page {
       await this.UIS.showLoading();
       try {
         await this.noteS.addNote(note);
-        await this.UIS.showToast("Nota introducida correctamente", "success");
+        await this.UIS.showToast("Note successfully saved", "success");
 
       } catch (error) {
         if(note.img.length / 1024 >= 1500) {
-          await this.UIS.showToast("Error tamaño de imagen excedido", "danger");
+          await this.UIS.showToast("Error image size exceeded", "danger");
 
         } else {
-          await this.UIS.showToast("Error al insertar la nota", "danger");
+          await this.UIS.showToast("Error saving the note", "danger");
           console.error(error);
           console.error(note);
         }

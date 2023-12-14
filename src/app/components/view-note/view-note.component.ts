@@ -5,6 +5,8 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { UIService } from 'src/app/services/ui.service';
 import { PreviewImgComponent } from '../preview-img/preview-img.component';
 import { PreviewMapComponent } from '../preview-map/preview-map.component';
+import { informationCircleOutline, checkmarkCircleOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-view-note',
@@ -20,7 +22,10 @@ export class ViewNoteComponent  implements OnInit {
   private modalService = inject(ModalController);
   private uiService = inject(UIService);
 
-  constructor() {}
+  constructor() {
+    addIcons({ informationCircleOutline, checkmarkCircleOutline });
+
+  }
 
   ngOnInit() {
     if (!this.param) this.modalService.dismiss();

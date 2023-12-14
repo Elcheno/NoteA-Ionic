@@ -1,7 +1,11 @@
 .content-description {
   text-align: start;
   border-radius: 10px;
+  padding: 15px;
+}
 
+.content-description > p {
+  margin: 0;
 }
 
 .cards {
@@ -27,4 +31,8 @@ ion-datetime {
 .calendar{
   display: grid;
   place-content: center;
+}
+
+.header-info {
+  margin: 0 10px;
 }

@@ -8,6 +8,8 @@ import { transitionAnimationBtn } from 'src/app/animations/animationBtn';
 import { PreviewImgComponent } from '../preview-img/preview-img.component';
 import { PreviewMapComponent } from '../preview-map/preview-map.component';
 import { CommonModule } from '@angular/common';
+import { informationCircleOutline, checkmarkCircleOutline } from 'ionicons/icons';
+import { addIcons } from 'ionicons';
 
 @Component({
   selector: 'app-update-note',
@@ -34,6 +36,8 @@ export class UpdateNoteComponent implements OnInit {
   };
 
   constructor() {
+    addIcons({ informationCircleOutline, checkmarkCircleOutline });
+
     this.form = this.formB.group({
       title:['',[Validators.required,Validators.minLength(4)]],
       description:['']
@@ -65,7 +69,7 @@ export class UpdateNoteComponent implements OnInit {
       position: this.location
     };
 
-    const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+    const resultDismiss = await this.uiService.dismissQuestion('Are you sure to update the note?');
     if (resultDismiss && resultDismiss === 'confirm') {
       return this.modalS.dismiss(aux, 'confirm');
     }
@@ -73,7 +77,7 @@ export class UpdateNoteComponent implements OnInit {
   }
 
   async removeLocation() {
-    const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+    const resultDismiss = await this.uiService.dismissQuestion('Are you sure to delete the location?');
     if (resultDismiss && resultDismiss === 'confirm') {
       this.location = {
         latitude: '',
@@ -83,7 +87,7 @@ export class UpdateNoteComponent implements OnInit {
   }
 
   async removeImg() {
-    const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+    const resultDismiss = await this.uiService.dismissQuestion('Are you sure you want to delete the image?');
     if (resultDismiss && resultDismiss === 'confirm') {
       this.img = '';
     }

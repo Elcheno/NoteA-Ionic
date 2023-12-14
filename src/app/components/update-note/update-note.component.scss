@@ -11,19 +11,13 @@
 
 .input-item {
   border-radius: 10px;
-  //  --ion-item-background: rgb(98, 98, 98);
    margin-bottom: 5px;
 }
 
 .cards {
   display: grid;
-  grid-template-rows: auto 1fr 1fr;
-  row-gap: 1.25em;
-}
-
-ion-card {
-  display: grid;
-  // --background: rgb(42, 42, 42);
+  grid-template-rows: auto auto;
+  row-gap: .5em;
 }
 
 ion-card > div {
@@ -41,12 +35,6 @@ ion-datetime {
   display: grid;
   place-content: center;
 }
-
-// .buttons-container {
-  // display: grid;
-  // grid-template-columns: auto auto;
-  // justify-content: space-between;
-// }
 
 .input-item-description {
   height: auto;
