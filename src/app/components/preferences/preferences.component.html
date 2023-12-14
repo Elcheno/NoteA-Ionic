@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="back()">Back</ion-button>
+    </ion-buttons>
+    <ion-title>Preferences</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()" [strong]="true">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-toolbar class="content-preferences">
+    <ion-label slot="start">Dark Mode</ion-label>
+    <ion-toggle [enableOnOffLabels]="true" [ngModel]="isDark" (ionChange)="darkToggleChange($event)" slot="end"></ion-toggle>
+  </ion-toolbar>
+
+</ion-content>

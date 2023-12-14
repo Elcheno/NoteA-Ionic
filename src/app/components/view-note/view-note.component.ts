@@ -34,7 +34,7 @@ export class ViewNoteComponent  implements OnInit {
     this.uiService.showModal(PreviewMapComponent, this.param.position);
   }
 
-  showImg() {
+  async showImg() {
     this.uiService.showModal(PreviewImgComponent, this.param.img);
   }
 

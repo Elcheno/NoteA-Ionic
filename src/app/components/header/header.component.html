@@ -1,7 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>
+
+    <ion-title slot="start">
       {{title}}
     </ion-title>
+
+    <ion-icon name="cog" slot="end" aria-label="Preferences" (click)="editPreferences()"></ion-icon>
+
   </ion-toolbar>
 </ion-header>

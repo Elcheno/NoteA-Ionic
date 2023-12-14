@@ -76,7 +76,7 @@ export class UIService {
     return role;
   };
 
-  async showModal(component: any, componentProp: any): Promise<HTMLIonModalElement | undefined> {
+  async showModal(component: any, componentProp?: any): Promise<HTMLIonModalElement | undefined> {
     try {
       const modal = await this.modalService.create({
         component: component,
