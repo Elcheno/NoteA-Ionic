@@ -25,6 +25,7 @@ export class Tab1Page implements OnInit {
   public notes!: Note[];
   public orderBy: OrderBy = 'asc';
   private lastNoteDate: string = '';
+  public infiniteScrollInProgress: boolean = false;
 
   constructor() { }
 
@@ -59,14 +60,14 @@ export class Tab1Page implements OnInit {
             }
 
           } else {
-            this.uiService.showToast("Error to charge note's list", 'danger');
+            this.uiService.showToast("Error loading the note list", 'danger');
             throw new Error('Firebase not response');
 
           }
         });
 
       } catch (err) {
-        this.uiService.showToast("Error to charge note's list", 'danger');
+        this.uiService.showToast("Error loading the note list", 'danger');
         console.error(err);
 
       } finally {
@@ -89,11 +90,11 @@ export class Tab1Page implements OnInit {
           try {
             await this.noteS.updateNote(data).then(async () => {
               this.notes.splice(this.notes.indexOf(note), 1, data);
-              await this.uiService.showToast("Nota actualizada correctamente", "success");
+              await this.uiService.showToast("Note updated correctly", "success");
             });
 
           } catch (err) {
-            await this.uiService.showToast("Error al actualizar la nota", "danger");
+            await this.uiService.showToast("Error updating the note", "danger");
 
           } finally {
             await this.uiService.hideLoading();
@@ -106,18 +107,18 @@ export class Tab1Page implements OnInit {
 
   async deleteNote(note: Note): Promise<void> {
     if (note && note.key) {
-      const resultDismiss = await this.uiService.dismissQuestion('Are you sure?');
+      const resultDismiss = await this.uiService.dismissQuestion('Are you sure you want to delete the note?');
       if (resultDismiss && resultDismiss === 'confirm') {
         await this.uiService.showLoading();
 
         try {
           await this.noteS.deleteNote(note).then(async () => {
             this.notes.splice(this.notes.indexOf(note), 1);
-            await this.uiService.showToast("Nota eliminada correctamente", "success");
+            await this.uiService.showToast("Note successfully deleted", "success");
           });
 
         } catch (err) {
-          await this.uiService.showToast("Error al eliminar la nota", "danger");
+          await this.uiService.showToast("Error deleting note", "danger");
 
         } finally {
           await this.uiService.hideLoading();
@@ -157,9 +158,14 @@ export class Tab1Page implements OnInit {
       setTimeout(() => {
         this.getNotes().then(() => {
           event.target.complete();
-
+          this.infiniteScrollInProgress = true;
+          setTimeout(() => {
+            this.infiniteScrollInProgress = false;
+          }, 2500)
         });
       }, 1000);
+
+
 
   }
 

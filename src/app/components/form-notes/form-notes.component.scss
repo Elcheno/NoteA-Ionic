@@ -3,16 +3,11 @@
   max-height: 400px;
 }
 
-form {
-  height: 100%;
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-}
-
 .cards {
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 1.25em;
+  grid-template-rows: auto auto;
+  row-gap: .5em;
+  margin-bottom: 50px;
 }
 
 .parentImg {
@@ -21,14 +16,15 @@ form {
 
 ion-toolbar {
   padding: 0 10px 0 10px;
+  --background: transparent!important;
 }
 
 ion-toolbar > ion-button {
   width: 100%;
 }
 
-ion-card {
-  display: grid;
+ion-card ion-card-header {
+  padding: 8px 16px;
 }
 
 ion-card > div {
@@ -36,3 +32,8 @@ ion-card > div {
   align-items: end;
   display: grid;
 }
+
+.icon-info-error {
+  justify-self: end;
+}
+

@@ -1,7 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { cog } from 'ionicons/icons';
+import { settingsOutline } from 'ionicons/icons';
 import { PreferencesComponent } from 'src/app/components/preferences/preferences.component';
 import { UIService } from 'src/app/services/ui.service';
 
@@ -19,7 +19,7 @@ export class HeaderComponent {
   private UIService = inject(UIService);
 
   constructor() {
-    addIcons({ cog });
+    addIcons({ settingsOutline });
   }
 
   editPreferences() {

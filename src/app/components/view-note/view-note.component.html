@@ -7,17 +7,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
 
+  <div class="header-info">
+    <h1>{{ this.param.title }}</h1>
 
-  <h1>{{ this.param.title }}</h1>
-
-
-  @if (this.param.description) {
+    @if (this.param.description) {
     <ion-toolbar class="content-description">
       <p>{{ this.param.description }}</p>
     </ion-toolbar>
-  }
+    }
+  </div>
 
   <div class="cards">
 
@@ -26,39 +26,57 @@
     </div>
 
     @if ((this.param.position.latitude && this.param.position.longitude)) {
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Map</ion-card-title>
-        </ion-card-header>
-  
-        <ion-card-content>
-          Exact location of your note
-        </ion-card-content>
-  
-        <div>
-          <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR
-            LOCATION</ion-button>
-        </div>
-      </ion-card>
-      }
-  
-      @if (this.param.img) {
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Image</ion-card-title>
-        </ion-card-header>
-  
-        <ion-card-content>
-          Size: {{ (this.param.img.length / 1024) | number }} kb
-        </ion-card-content>
-  
-        <div>
-          <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK
-            IMAGE</ion-button>
-        </div>
-  
-      </ion-card>
-      }
+    <ion-card>
+      <ion-icon id="click-trigger-map-view" name="information-circle-outline" class="icon-info-card"></ion-icon>
+      <ion-popover trigger="click-trigger-map-view" triggerAction="click" side="left" alignment="start">
+        <ng-template>
+          <ion-content class="ion-padding">Click on <span class="popoyer-btn-primary">check your location↙</span> to
+            view it and you can delete it by updating it.</ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-card-header>
+        <ion-card-title>Map</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content style="grid-template-columns: auto 28px;">
+        Exact location of your note
+        <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showMap()" expand="block" strong="true" shape="round">CHECK YOUR
+          LOCATION</ion-button>
+      </div>
+    </ion-card>
+    }
+
+    @if (this.param.img) {
+    <ion-card>
+      <ion-icon id="click-trigger-img-view" name="information-circle-outline" class="icon-info-card"></ion-icon>
+      <ion-popover trigger="click-trigger-img-view" triggerAction="click" side="left" alignment="start">
+        <ng-template>
+          <ion-content class="ion-padding">Click on <span class="popoyer-btn-primary">check image↙</span> to view it and
+            you can delete it by updating it.</ion-content>
+        </ng-template>
+      </ion-popover>
+
+      <ion-card-header>
+        <ion-card-title>Image</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        Size: <span>{{ (this.param.img.length / 1024) | number }} kb</span>
+        <ion-icon name="checkmark-circle-outline" class="success-icon"></ion-icon>
+      </ion-card-content>
+
+      <div>
+        <ion-button fill="outline" (click)="showImg()" expand="block" strong="true" shape="round">CHECK
+          IMAGE</ion-button>
+      </div>
+
+    </ion-card>
+    }
 
   </div>
   <!-- <ion-datetime></ion-datetime> -->
