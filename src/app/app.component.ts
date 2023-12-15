@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Preferences } from '@capacitor/preferences';
+import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,9 @@ export class AppComponent implements OnInit {
   constructor() {}
 
   async ngOnInit(): Promise<void> {
+    await SplashScreen.show({
+      autoHide: false,
+    });
     const { value } = await Preferences.get({ key: 'dark' });
 
     if (value) {
