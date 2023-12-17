@@ -11,6 +11,5 @@ Estos son todos los comandos que puedes ejecutar en tu terminal sobre este proye
 | Command                   | Action                                           |
 | :------------------------ | :----------------------------------------------- |
 | `npm install`             | Instalar dependencias                            |
-| `npm run dev`             | Starts local dev server at `localhost:4200`      |
-| `npm run tsc`             | Build your production site to `./build`          |
-| `npm run start`           | Deploy your build in server at `localhost:4200`  |
+| `ionic serve`             | Starts local dev server at `localhost:8100`      |
+| `ionic build`             | Build your production site to `./www`            |
