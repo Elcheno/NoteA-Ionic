@@ -71,8 +71,8 @@ export class FormNotesComponent {
       }
     } else {
       const image = await Camera.getPhoto({
-        quality: 75,
-        allowEditing: false,
+        quality: 50,
+        allowEditing: true,
         resultType: CameraResultType.Base64
       });
 
