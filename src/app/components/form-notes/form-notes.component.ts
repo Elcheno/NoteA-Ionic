@@ -48,6 +48,7 @@ export class FormNotesComponent {
 
   }
 
+  
   public async submit(): Promise<void> {
     if (!this.form.valid) return;
     let note: Note = {
